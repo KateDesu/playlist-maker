@@ -1,19 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/blue"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:layout_marginVertical="4dp">
+
+            <Button
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:backgroundTint="@color/blue"/>
+
+            <TextView
+                android:layout_width="208dp"
+                android:layout_height="48dp"
+                android:textColor="@color/text_white"
+                android:paddingTop="10dp"
+                android:layout_marginStart="12dp"
+                android:textSize="22sp"
+                android:text="@string/title"
+                android:paddingVertical="4dp"/>
+
+        </FrameLayout>
+
+        <Button
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:backgroundTint="@color/blue"
+            android:layout_marginEnd="4dp"
+            android:layout_marginVertical="4dp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="28dp"
+        android:layout_gravity="center">
+        
+        <Button
+            android:layout_width="328dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/search"
+            app:icon="@drawable/ic_search"
+            app:iconGravity="textStart"
+            app:iconTint="@color/black"
+            app:cornerRadius="16dp"
+            app:iconPadding="8dp"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:backgroundTint="@color/white"/>
+
+        <Button
+            android:layout_width="328dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/library"
+            app:icon="@drawable/ic_library"
+            app:iconGravity="textStart"
+            app:iconTint="@color/black"
+            app:cornerRadius="16dp"
+            app:iconPadding="8dp"
+            android:textSize="22sp"
+            android:textColor="@color/black"
+
+            android:backgroundTint="@color/white"/>
+
+        <Button
+            android:layout_width="328dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/settings"
+            app:icon="@drawable/ic_settings"
+            app:iconGravity="textStart"
+            app:iconTint="@color/black"
+            app:cornerRadius="16dp"
+            app:iconPadding="8dp"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:backgroundTint="@color/white"/>
+    </LinearLayout>
+
+</LinearLayout>
