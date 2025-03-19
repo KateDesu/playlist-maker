@@ -11,6 +11,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        app:navigationIcon="@drawable/ic_arrow_back"
         app:title="@string/settings"
         app:titleTextAppearance="@style/toolbar" />
 
@@ -21,6 +22,8 @@
         android:paddingHorizontal="16dp"
         android:paddingVertical="20dp"
         android:text="@string/black_theme"
+        app:thumbTint="@color/switch_thumb_color"
+        app:trackTint="@color/switch_track_color"
         android:textSize="@dimen/text_size_16" />
 
     <com.google.android.material.textview.MaterialTextView
