@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="toolbar">
+        <item name="android:textSize">26sp</item>
+    </style>
+
+    <style name="toolbar_main">
+        <item name="android:textSize">22sp</item>
+    </style>
+</resources>
