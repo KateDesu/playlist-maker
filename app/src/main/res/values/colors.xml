@@ -2,8 +2,33 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="text_gray">#AEAFB4</color>
+    <color name="light_gray">#E6E8EB</color>
     <color name="blue">#3772E7</color>
-    <color name="text_white">#FFFFFF</color>
+    <color name="blue_light">#9FBBF3</color>
+    <color name="red">#F56B6C</color>
+
+    <!--Light -->
+    <color name="background_light">@color/blue</color>
+    <color name="background_secondary_light">@color/white</color>
+    <color name="background_button_light">@color/white</color>
+    <color name="icon_button_light">@color/black</color>
+    <color name="icon_switch_light">@color/white</color>
+    <color name="text_button_light">@color/black</color>
+    <color name="text_tool_light">@color/white</color>
+    <color name="icon_drawable_light">@color/text_gray</color>
+
+    <!--Dark -->
+    <color name="background_dark">@color/black</color>
+    <color name="background_button_dark">@color/white</color>
+    <color name="icon_button_dark">@color/black</color>
+    <color name="icon_switch_dark">@color/white</color>
+    <color name="text_button_dark">@color/black</color>
+    <color name="text_tool_dark">@color/white</color>
+    <color name="text_view_dark">@color/white</color>
+    <color name="icon_drawable_dark">@color/white</color>
+
+
     <color name="switch_thumb_active_color">#3772E7</color>
     <color name="switch_thumb_inactive_color">#CECFD2</color>
     <color name="switch_track_active_color">#92A9E7</color>
