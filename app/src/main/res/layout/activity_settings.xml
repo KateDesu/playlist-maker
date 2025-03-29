@@ -20,16 +20,19 @@
         app:trackTint="@color/switch_track_color" />
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/text_view_share_app"
         style="@style/TextViewStyle"
         android:drawableEnd="@drawable/ic_share"
         android:text="@string/share_app" />
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/text_view_write_to_support"
         style="@style/TextViewStyle"
         android:drawableEnd="@drawable/ic_support"
         android:text="@string/write_to_support" />
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/text_view_user_agreement"
         style="@style/TextViewStyle"
         android:drawableEnd="@drawable/ic_arrow_forward"
         android:text="@string/user_agreement" />
