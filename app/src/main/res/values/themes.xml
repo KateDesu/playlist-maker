@@ -15,10 +15,4 @@
 <!--        <item name="android:background">?attr/colorPrimary</item> &lt;!&ndash; Цвет фона &ndash;&gt;-->
 <!--        <item name="colorOnError">@color/white</item> &lt;!&ndash; Цвет текста на фоне ошибок &ndash;&gt;-->
     </style>
-
-    <style name="Theme.PlaylistMaker" parent="Base.Theme.PlaylistMaker" />
-
-    <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
-
-    </style>
 </resources>

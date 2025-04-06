@@ -9,6 +9,11 @@
     <color name="blue_light">#9FBBF3</color>
     <color name="red">#F56B6C</color>
 
+    <color name="switch_thumb_active_color">@color/blue</color>
+    <color name="switch_thumb_inactive_color">#CECFD2</color>
+    <color name="switch_track_active_color">#92A9E7</color>
+    <color name="switch_track_inactive_color">#F0F1F3</color>
+
     <!--Dark -->
     <color name="background_primary">@color/black_yp</color>
     <color name="background_secondary">@color/black_yp</color>
@@ -22,11 +27,8 @@
     <color name="icon_primary">@color/white</color>
     <color name="icon_secondary">@color/white</color>
     <color name="text_view">@color/white</color>
-    <color name="text_color_hint" >@color/white</color>
+    <color name="text_color_hint" >@color/black_yp</color>
     <color name="icon_hint">@color/black_yp</color>
-
-    <color name="switch_thumb_active_color">@color/blue</color>
-    <color name="switch_thumb_inactive_color">#CECFD2</color>
-    <color name="switch_track_active_color">#92A9E7</color>
-    <color name="switch_track_inactive_color">#F0F1F3</color>
+    <color name="text_color">@color/black_yp</color>
+    <color name="edittext_color">@color/white</color>
 </resources>

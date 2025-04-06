@@ -15,26 +15,19 @@
         app:title="@string/search" />
 
     <LinearLayout
+        android:id="@+id/layout_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:orientation="horizontal">
 
         <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:autofillHints=""
-            android:textColorHint="@color/black"
+            android:id="@+id/edittext_search"
+            style="@style/EditTextStyle"
             android:background="@drawable/background_edittext"
             android:drawableStart="@drawable/ic_search_small"
-            android:hint="@string/search_hint"
-            android:inputType="text"
-            android:maxLines="1"
-            android:textColor="@color/text_color_hint"
             android:drawablePadding="@dimen/icon_padding_8"
-            android:textSize="16sp"
-            tools:ignore="RtlSymmetry" />
+            android:hint="@string/search_hint" />
 
         <ImageView
             android:id="@+id/clearIcon"
