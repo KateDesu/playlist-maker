@@ -17,4 +17,8 @@
     </style>
 
     <style name="Theme.PlaylistMaker" parent="Base.Theme.PlaylistMaker" />
+
+    <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
+
+    </style>
 </resources>

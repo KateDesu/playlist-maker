@@ -16,4 +16,5 @@
     <string name="email_author">hakuoki17@mail.ru</string>
     <string name="url_practicum">https://practicum.yandex.ru/android-developer/</string>
     <string name="url_agreement">https://yandex.ru/legal/practicum_offer/</string>
+    <string name="search_hint">Поиск</string>
 </resources>

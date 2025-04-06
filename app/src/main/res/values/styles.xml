@@ -4,23 +4,29 @@
     <style name="ActivityMainStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@color/background_light</item>
+        <item name="android:background">@color/background_primary</item>
     </style>
 
     <style name="ActivitySettingsStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@color/background_secondary_light</item>
+        <item name="android:background">@color/background_secondary</item>
+    </style>
+
+    <style name="ActivitySearchStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/background_secondary</item>
     </style>
 
     <style name="ToolbarStyle" parent="Widget.MaterialComponents.Toolbar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">56dp</item>
         <item name="android:textSize">22sp</item>
-        <item name="titleTextColor">@color/black</item>
+        <item name="titleTextColor">@color/text_tool</item>
         <item name="android:layout_marginBottom">24dp</item>
         <item name="fontFamily">@font/ys_display_medium</item>
-        <item name="navigationIconTint">@color/icon_button_light</item>
+        <item name="navigationIconTint">@color/icon_button</item>
         <item name="android:textFontWeight">500</item>
     </style>
 
@@ -28,7 +34,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">56dp</item>
         <item name="android:textSize">22sp</item>
-        <item name="titleTextColor">@color/white</item>
+        <item name="titleTextColor">@color/text_tool_main</item>
         <item name="fontFamily">@font/ys_display_medium</item>
         <item name="android:textFontWeight">500</item>
     </style>
@@ -41,7 +47,7 @@
         <item name="cornerRadius">16dp</item>
         <item name="iconGravity">textStart</item>
         <item name="iconPadding">8dp</item>
-        <item name="iconTint">@color/black</item>
+        <item name="iconTint">@color/icon_button</item>
         <item name="android:layout_marginStart">16dp</item>
         <item name="android:layout_marginEnd">16dp</item>
         <item name="android:layout_marginBottom">8dp</item>
@@ -60,13 +66,13 @@
         <item name="android:paddingTop">20dp</item>
         <item name="android:paddingBottom">20dp</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/text_view</item>
         <item name="android:textFontWeight">400</item>
         <item name="fontFamily">@font/ys_display_regular</item>
     </style>
 
     <style name="TextViewStyle">
-        <item name="android:drawableTint">@color/icon_drawable_light</item>
+        <item name="android:drawableTint">@color/icon_drawable</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center_vertical</item>
@@ -74,7 +80,7 @@
         <item name="android:paddingEnd">16dp</item>
         <item name="android:paddingTop">20dp</item>
         <item name="android:paddingBottom">20dp</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/text_view</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textFontWeight">400</item>
         <item name="fontFamily">@font/ys_display_regular</item>
