@@ -14,7 +14,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 
-class SearchActivity: AppCompatActivity() {
+class SearchActivity : AppCompatActivity() {
+    private var search_input: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -34,6 +36,7 @@ class SearchActivity: AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 clearButton.visibility = clearButtonVisibility(s)
+                search_input = s.toString()
             }
 
             override fun afterTextChanged(s: Editable) {}
@@ -53,5 +56,15 @@ class SearchActivity: AppCompatActivity() {
         } else {
             View.VISIBLE
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("search_input",search_input)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        search_input=savedInstanceState.getString("search_input")
     }
 }
