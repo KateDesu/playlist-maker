@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
@@ -22,10 +23,12 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         val shareTextView = findViewById<TextView>(R.id.text_view_share_app)
-        val urlPracticum = Uri.parse(getString(R.string.url_practicum))
+        val urlPracticum = getString(R.string.url_practicum).toUri()
+            //Uri.parse(getString(R.string.url_practicum))
 
         shareTextView.setOnClickListener{
             val intent=Intent(Intent.ACTION_SEND)
+            intent.type="text/plain"
             intent.putExtra(Intent.EXTRA_TEXT, urlPracticum)
             startActivity(intent)
         }
@@ -45,7 +48,8 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         val userAgreementTextView = findViewById<TextView>(R.id.text_view_user_agreement)
-        val urlAgreement = Uri.parse(getString(R.string.url_agreement))
+        val urlAgreement = getString(R.string.url_agreement).toUri()
+            //Uri.parse(getString(R.string.url_agreement))
 
         userAgreementTextView.setOnClickListener{
             val intent=Intent(Intent.ACTION_VIEW, urlAgreement)
