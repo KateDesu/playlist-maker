@@ -35,7 +35,7 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         val shareTextView = findViewById<TextView>(R.id.text_view_share_app)
-        val urlPracticum = getString(R.string.url_practicum).toUri()
+        val urlPracticum = getString(R.string.url_practicum)
             //Uri.parse(getString(R.string.url_practicum))
 
         shareTextView.setOnClickListener{
