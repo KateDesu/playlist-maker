@@ -1,9 +1,18 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.PlaylistMaker" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-    </style>
+        <!-- Primary brand color. -->
+<!--        <item name="colorPrimary">@color/blue</item> &lt;!&ndash; Основной цвет бренда &ndash;&gt;-->
+<!--        <item name="colorPrimaryVariant">@color/blue_light</item> &lt;!&ndash; Вариант основного цвета &ndash;&gt;-->
+<!--        <item name="colorOnPrimary">@color/white</item> &lt;!&ndash; Цвет текста на основном фоне &ndash;&gt;-->
 
-    <style name="Theme.PlaylistMaker" parent="Base.Theme.PlaylistMaker" />
+<!--        &lt;!&ndash; Secondary brand color. &ndash;&gt;-->
+<!--        <item name="colorSecondary">@color/black</item> &lt;!&ndash; Вторичный цвет бренда &ndash;&gt;-->
+<!--        <item name="colorSecondaryVariant">@color/light_gray</item> &lt;!&ndash; Вариант вторичного цвета &ndash;&gt;-->
+<!--        <item name="colorOnSecondary">@color/text_gray</item> &lt;!&ndash; Цвет текста на вторичном фоне &ndash;&gt;-->
+
+<!--        &lt;!&ndash; Background and surface colors &ndash;&gt;-->
+<!--        <item name="android:background">?attr/colorPrimary</item> &lt;!&ndash; Цвет фона &ndash;&gt;-->
+<!--        <item name="colorOnError">@color/white</item> &lt;!&ndash; Цвет текста на фоне ошибок &ndash;&gt;-->
+    </style>
 </resources>

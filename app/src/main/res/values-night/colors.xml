@@ -9,27 +9,26 @@
     <color name="blue_light">#9FBBF3</color>
     <color name="red">#F56B6C</color>
 
-    <!--Light -->
     <color name="switch_thumb_active_color">@color/blue</color>
     <color name="switch_thumb_inactive_color">#CECFD2</color>
     <color name="switch_track_active_color">#92A9E7</color>
     <color name="switch_track_inactive_color">#F0F1F3</color>
 
-    <color name="background_primary">@color/blue</color>
-    <color name="background_secondary">@color/white</color>
-    <color name="background_button">@color/white</color>
+    <!--Dark -->
+    <color name="background_primary">@color/black_yp</color>
+    <color name="background_secondary">@color/black_yp</color>
+    <color name="background_button">@color/black_yp</color>
     <color name="icon_button">@color/black_yp</color>
     <color name="icon_switch">@color/white</color>
     <color name="text_button">@color/black_yp</color>
     <color name="text_tool_main">@color/white</color>
-    <color name="text_tool">@color/black_yp</color>
-    <color name="icon_drawable">@color/gray</color>
-    <color name="icon_primary">@color/black_yp</color>
-    <color name="icon_secondary">@color/gray</color>
-    <color name="text_view">@color/black_yp</color>
-    <color name="text_color_hint" >@color/gray</color>
-    <color name="icon_hint">@color/gray</color>
+    <color name="text_tool">@color/white</color>
+    <color name="icon_drawable">@color/white</color>
+    <color name="icon_primary">@color/white</color>
+    <color name="icon_secondary">@color/white</color>
+    <color name="text_view">@color/white</color>
+    <color name="text_color_hint" >@color/black_yp</color>
+    <color name="icon_hint">@color/black_yp</color>
     <color name="text_color">@color/black_yp</color>
-    <color name="edittext_color">@color/gray_light</color>
-
+    <color name="edittext_color">@color/white</color>
 </resources>
