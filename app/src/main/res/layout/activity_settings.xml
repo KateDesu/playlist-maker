@@ -12,7 +12,6 @@
         android:id="@+id/toolbar"
         app:navigationIcon="@drawable/ic_arrow_back"
         app:title="@string/settings"
-
         style="@style/ToolbarStyle" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
@@ -22,19 +21,19 @@
         app:trackTint="@color/switch_track_color" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/text_view_share_app"
+        android:id="@+id/tvShareApp"
         style="@style/TextViewStyle"
         android:drawableEnd="@drawable/ic_share"
         android:text="@string/share_app" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/text_view_write_to_support"
+        android:id="@+id/tvWriteToSupport"
         style="@style/TextViewStyle"
         android:drawableEnd="@drawable/ic_support"
         android:text="@string/write_to_support" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/text_view_user_agreement"
+        android:id="@+id/tvUserAgreement"
         style="@style/TextViewStyle"
         android:drawableEnd="@drawable/ic_arrow_forward"
         android:text="@string/user_agreement" />
