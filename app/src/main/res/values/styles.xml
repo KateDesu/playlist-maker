@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="ActivityMainStyle">
         <item name="android:layout_width">match_parent</item>
@@ -95,5 +95,38 @@
         <item name="android:textColor">@color/text_color</item>
         <item name="android:textColorHint">@color/text_color_hint</item>
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextViewStyleTrackName">
+        <item name="android:textColor">@color/text_view</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="fontFamily">@font/ys_display_regular</item>
+    </style>
+
+    <style name="TextViewStyleTrack">
+        <item name="android:textColor">@color/text_view_small</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="fontFamily">@font/ys_display_regular</item>
+    </style>
+
+    <style name="RecycleTracksStyle" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:textColor">@color/text_color</item>
+    </style>
+
+    <style name="LinearItemViewTrack" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/background_secondary</item>
+        <item name="android:minHeight">61dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingHorizontal">12dp</item>
+        <item name="android:paddingVertical">8dp</item>
     </style>
 </resources>

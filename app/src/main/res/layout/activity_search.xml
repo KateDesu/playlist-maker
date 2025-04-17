@@ -15,14 +15,14 @@
         app:title="@string/search" />
 
     <FrameLayout
-        android:id="@+id/layout_search"
+        android:id="@+id/fl_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/edittext_search"
+            android:id="@+id/etSearch"
             style="@style/EditTextStyle"
             android:background="@drawable/background_edittext"
             android:drawableStart="@drawable/ic_search_small"
@@ -30,12 +30,17 @@
             android:hint="@string/search_hint" />
 
         <ImageView
-            android:id="@+id/clearIcon"
+            android:id="@+id/ivClearIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical"
             android:src="@android:drawable/ic_menu_close_clear_cancel"
             android:visibility="gone" />
     </FrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTrackList"
+        style="@style/RecycleTracksStyle"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 </LinearLayout>
