@@ -34,7 +34,7 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(toolbarIntent)
         }
 
-        val shareTextView = findViewById<TextView>(R.id.text_view_share_app)
+        val shareTextView = findViewById<TextView>(R.id.tvShareApp)
         val urlPracticum = getString(R.string.url_practicum)
             //Uri.parse(getString(R.string.url_practicum))
 
@@ -45,7 +45,7 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val writeToSupportTextView = findViewById<TextView>(R.id.text_view_write_to_support)
+        val writeToSupportTextView = findViewById<TextView>(R.id.tvWriteToSupport)
 
         writeToSupportTextView.setOnClickListener {
             val messageHeader = getString(R.string.message_header)
@@ -59,7 +59,7 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val userAgreementTextView = findViewById<TextView>(R.id.text_view_user_agreement)
+        val userAgreementTextView = findViewById<TextView>(R.id.tvUserAgreement)
         val urlAgreement = getString(R.string.url_agreement).toUri()
             //Uri.parse(getString(R.string.url_agreement))
 
