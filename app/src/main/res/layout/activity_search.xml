@@ -24,10 +24,14 @@
         <EditText
             android:id="@+id/etSearch"
             style="@style/EditTextStyle"
+
             android:background="@drawable/background_edittext"
             android:drawableStart="@drawable/ic_search_small"
+
             android:drawablePadding="@dimen/icon_padding_8"
-            android:hint="@string/search_hint" />
+            android:hint="@string/search_hint"
+            android:imeOptions="actionDone"
+            android:singleLine="true" />
 
         <ImageView
             android:id="@+id/ivClearIcon"
@@ -37,6 +41,32 @@
             android:src="@android:drawable/ic_menu_close_clear_cancel"
             android:visibility="gone" />
     </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/llPlaceholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="102dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/ivSearchError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/etPlaceholderMessage"
+            style="@style/TextViewPlaceholderStyle" />
+
+        <Button
+            android:id="@+id/btnPlaceholderUpdate"
+            style="@style/ButtonUpdate"
+            android:text="@string/update"
+            android:visibility="gone" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTrackList"
