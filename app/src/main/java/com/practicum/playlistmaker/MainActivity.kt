@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
         
         val searchButtonClickListener: View.OnClickListener = object : View.OnClickListener {
             override fun onClick(v: View?) {
-                //Toast.makeText(this@MainActivity, "Нажатие на Поиск", Toast.LENGTH_SHORT).show()
                 val searchIntent = Intent(this@MainActivity, SearchActivity::class.java)
                 startActivity(searchIntent)
             }
@@ -38,7 +37,6 @@ class MainActivity : AppCompatActivity() {
         val libraryButton = findViewById<Button>(R.id.btn_library)
 
         libraryButton.setOnClickListener {
-            //Toast.makeText(this@MainActivity, "Нажатие на Медиатеку", Toast.LENGTH_SHORT).show()
             val libraryIntent = Intent(this, LibraryActivity::class.java)
             startActivity(libraryIntent)
 
@@ -47,7 +45,6 @@ class MainActivity : AppCompatActivity() {
         val settingsButton = findViewById<Button>(R.id.btn_settings)
 
         settingsButton.setOnClickListener {
-            //Toast.makeText(this@MainActivity, "Нажатие на Настройки", Toast.LENGTH_SHORT).show()
             val settingsIntent = Intent(this, SettingsActivity::class.java)
             startActivity(settingsIntent)
         }

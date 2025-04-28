@@ -20,19 +20,14 @@
     </style>
 
     <style name="ToolbarStyle" parent="Widget.MaterialComponents.Toolbar">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">56dp</item>
         <item name="android:textSize">22sp</item>
         <item name="titleTextColor">@color/text_tool</item>
-        <item name="android:layout_marginBottom">24dp</item>
         <item name="fontFamily">@font/ys_display_medium</item>
         <item name="navigationIconTint">@color/icon_button</item>
         <item name="android:textFontWeight">500</item>
     </style>
 
     <style name="ToolbarMainStyle" parent="Widget.MaterialComponents.Toolbar">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">56dp</item>
         <item name="android:textSize">22sp</item>
         <item name="titleTextColor">@color/text_tool_main</item>
         <item name="fontFamily">@font/ys_display_medium</item>
@@ -40,7 +35,6 @@
     </style>
 
     <style name="ButtonStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
-        <item name="android:layout_width">match_parent</item>
         <item name="backgroundTint">@color/white</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">22sp</item>
@@ -48,9 +42,6 @@
         <item name="iconGravity">textStart</item>
         <item name="iconPadding">8dp</item>
         <item name="iconTint">@color/icon_button</item>
-        <item name="android:layout_marginStart">16dp</item>
-        <item name="android:layout_marginEnd">16dp</item>
-        <item name="android:layout_marginBottom">8dp</item>
         <item name="textAllCaps">false</item>
         <item name="android:textFontWeight">500</item>
         <item name="fontFamily">@font/ys_display_medium</item>
@@ -58,9 +49,6 @@
     </style>
 
     <style name="SwitchStyle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center_vertical</item>
         <item name="android:paddingStart">16dp</item>
         <item name="android:paddingEnd">16dp</item>
         <item name="android:paddingTop">20dp</item>
@@ -73,9 +61,6 @@
 
     <style name="TextViewStyle">
         <item name="android:drawableTint">@color/icon_drawable</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center_vertical</item>
         <item name="android:paddingStart">16dp</item>
         <item name="android:paddingEnd">16dp</item>
         <item name="android:paddingTop">20dp</item>
@@ -87,9 +72,6 @@
     </style>
 
     <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-<!--        <item name="android:layout_weight">1</item>-->
         <item name="android:inputType">text</item>
         <item name="android:maxLines">1</item>
         <item name="android:textColor">@color/text_color</item>
@@ -112,17 +94,11 @@
     </style>
 
     <style name="RecycleTracksStyle" parent="">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_marginTop">16dp</item>
-        <item name="android:layout_marginEnd">8dp</item>
         <item name="android:background">@color/white</item>
         <item name="android:textColor">@color/text_color</item>
     </style>
 
     <style name="LinearItemViewTrack" parent="">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@color/background_secondary</item>
         <item name="android:minHeight">61dp</item>
         <item name="android:orientation">horizontal</item>
@@ -131,19 +107,14 @@
     </style>
 
     <style name="TextViewPlaceholderStyle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
         <item name="android:textFontWeight">400</item>
         <item name="android:textSize">19sp</item>
-        <item name="android:layout_marginTop">16dp</item>
-        <item name="android:layout_marginHorizontal">24dp</item>
         <item name="android:textColor">@color/black_yp</item>
+        <item name="android:gravity">center</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
     </style>
 
     <style name="ButtonUpdate" parent="Widget.MaterialComponents.Button.UnelevatedButton">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
         <item name="android:backgroundTint">@color/background_button_update</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="android:paddingHorizontal">14dp</item>
@@ -152,7 +123,6 @@
         <item name="android:textColor">@color/text_button_update</item>
         <item name="android:textFontWeight">500</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:layout_marginTop">24dp</item>
         <item name="cornerRadius">54dp</item>
     </style>
 </resources>
