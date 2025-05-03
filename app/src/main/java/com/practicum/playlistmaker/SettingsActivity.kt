@@ -3,7 +3,6 @@ package com.practicum.playlistmaker
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -40,7 +39,6 @@ class SettingsActivity : AppCompatActivity() {
 
         val shareTextView = findViewById<TextView>(R.id.tvShareApp)
         val urlPracticum = getString(R.string.url_practicum)
-            //Uri.parse(getString(R.string.url_practicum))
 
         shareTextView.setOnClickListener{
             val intent=Intent(Intent.ACTION_SEND)
@@ -79,7 +77,6 @@ class SettingsActivity : AppCompatActivity() {
         themeSwitch.setOnCheckedChangeListener { switcher, checked ->
             (applicationContext as App).switchTheme(checked)
             val sharedPrefs = getSharedPreferences(PLAYLISTMAKER_PREFERENCES, MODE_PRIVATE)
-            Log.d("Theme", "${sharedPrefs.getBoolean(DARK_THEME_KEY, false)} settings")
         }
     }
 }

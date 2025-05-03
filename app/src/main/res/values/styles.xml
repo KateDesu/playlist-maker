@@ -114,11 +114,9 @@
         <item name="android:fontFamily">@font/ys_display_medium</item>
     </style>
 
-    <style name="ButtonUpdate" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+    <style name="ButtonSmall" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:backgroundTint">@color/background_button_update</item>
         <item name="android:fontFamily">@font/ys_display_medium</item>
-        <item name="android:paddingHorizontal">14dp</item>
-        <item name="android:paddingVertical">10dp</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">@color/text_button_update</item>
         <item name="android:textFontWeight">500</item>
