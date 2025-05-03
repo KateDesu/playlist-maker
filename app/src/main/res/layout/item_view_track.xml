@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/LinearItemViewTrack"
-    >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/imageview_artwork_url100"
@@ -23,6 +24,8 @@
             style="@style/TextViewStyleTrackName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
             tools:text="Yesterday (Remastered 2009)" />
 
         <LinearLayout
@@ -48,8 +51,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="5dp"
-                tools:text="2:55"
-                app:drawableStartCompat="@drawable/dot" />
+                app:drawableStartCompat="@drawable/dot"
+                tools:text="2:55" />
 
         </LinearLayout>
     </LinearLayout>

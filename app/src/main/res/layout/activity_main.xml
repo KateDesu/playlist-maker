@@ -10,13 +10,19 @@
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar_main"
         style="@style/ToolbarMainStyle"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
         app:title="@string/title" />
 
     <Button
         android:id="@+id/btn_search"
         style="@style/ButtonStyle"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_weight="1"
         android:text="@string/search"
         app:icon="@drawable/ic_search" />
@@ -24,7 +30,11 @@
     <Button
         android:id="@+id/btn_library"
         style="@style/ButtonStyle"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_weight="1"
         android:text="@string/library"
         app:icon="@drawable/ic_library" />
@@ -32,7 +42,10 @@
     <Button
         android:id="@+id/btn_settings"
         style="@style/ButtonStyle"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="20dp"
         android:layout_weight="1"
         android:text="@string/settings"

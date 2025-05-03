@@ -10,8 +10,10 @@
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         style="@style/ToolbarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginBottom="24dp"
         app:navigationIcon="@drawable/ic_arrow_back"
-
         app:title="@string/search" />
 
     <FrameLayout
@@ -24,10 +26,15 @@
         <EditText
             android:id="@+id/etSearch"
             style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
             android:background="@drawable/background_edittext"
             android:drawableStart="@drawable/ic_search_small"
             android:drawablePadding="@dimen/icon_padding_8"
-            android:hint="@string/search_hint" />
+            android:hint="@string/search_hint"
+            android:imeOptions="actionDone"
+            android:singleLine="true" />
 
         <ImageView
             android:id="@+id/ivClearIcon"
@@ -35,12 +42,79 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical"
             android:src="@android:drawable/ic_menu_close_clear_cancel"
-            android:visibility="gone" />
+            android:visibility="gone"
+            tools:ignore="ContentDescription" />
     </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/llPlaceholderNothingFound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="102dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:id="@+id/ivNothingFound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/placeholder_nothing_found"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/etNothingFound"
+            style="@style/TextViewPlaceholderStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/nothing_found" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llPlaceholderNoInternet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="102dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/ivNoInternet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/placeholder_no_internet"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/etSomethingWrong"
+            style="@style/TextViewPlaceholderStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/no_internet" />
+
+        <Button
+            android:id="@+id/btnUpdate"
+            style="@style/ButtonUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/update" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTrackList"
         style="@style/RecycleTracksStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 </LinearLayout>

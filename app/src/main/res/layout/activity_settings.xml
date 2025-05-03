@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/settings"
     style="@style/ActivitySettingsStyle"
     android:orientation="vertical"
-    android:id="@+id/settings"
     tools:context=".SettingsActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
+        style="@style/ToolbarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginBottom="24dp"
         app:navigationIcon="@drawable/ic_arrow_back"
-        app:title="@string/settings"
-        style="@style/ToolbarStyle" />
+        app:title="@string/settings" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         style="@style/SwitchStyle"
+        android:id="@+id/smThemeSwitcher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:text="@string/black_theme"
         app:thumbTint="@color/switch_thumb_color"
         app:trackTint="@color/switch_track_color" />
@@ -23,19 +29,28 @@
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvShareApp"
         style="@style/TextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:drawableEnd="@drawable/ic_share"
+        android:gravity="center_vertical"
         android:text="@string/share_app" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvWriteToSupport"
         style="@style/TextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:drawableEnd="@drawable/ic_support"
+        android:gravity="center_vertical"
         android:text="@string/write_to_support" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvUserAgreement"
         style="@style/TextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:drawableEnd="@drawable/ic_arrow_forward"
+        android:gravity="center_vertical"
         android:text="@string/user_agreement" />
 
 </LinearLayout>

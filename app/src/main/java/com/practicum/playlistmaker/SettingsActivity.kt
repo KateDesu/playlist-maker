@@ -3,6 +3,7 @@ package com.practicum.playlistmaker
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -10,8 +11,11 @@ import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.switchmaterial.SwitchMaterial
 
 class SettingsActivity : AppCompatActivity() {
+    private lateinit var themeSwitch: SwitchMaterial
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -61,11 +65,21 @@ class SettingsActivity : AppCompatActivity() {
 
         val userAgreementTextView = findViewById<TextView>(R.id.tvUserAgreement)
         val urlAgreement = getString(R.string.url_agreement).toUri()
-            //Uri.parse(getString(R.string.url_agreement))
 
         userAgreementTextView.setOnClickListener{
             val intent=Intent(Intent.ACTION_VIEW, urlAgreement)
             startActivity(intent)
+        }
+
+        // переключение на светлую / темную тему
+        themeSwitch = findViewById(R.id.smThemeSwitcher)
+
+        themeSwitch.isChecked = (application as App).darkTheme
+
+        themeSwitch.setOnCheckedChangeListener { switcher, checked ->
+            (applicationContext as App).switchTheme(checked)
+            val sharedPrefs = getSharedPreferences(PLAYLISTMAKER_PREFERENCES, MODE_PRIVATE)
+            Log.d("Theme", "${sharedPrefs.getBoolean(DARK_THEME_KEY, false)} settings")
         }
     }
 }

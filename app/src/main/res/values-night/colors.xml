@@ -8,6 +8,7 @@
     <color name="blue">#3772E7</color>
     <color name="blue_light">#9FBBF3</color>
     <color name="red">#F56B6C</color>
+    <color name="yellow">#FCD452</color>
 
     <color name="switch_thumb_active_color">@color/blue</color>
     <color name="switch_thumb_inactive_color">#CECFD2</color>
@@ -18,6 +19,7 @@
     <color name="background_primary">@color/black_yp</color>
     <color name="background_secondary">@color/black_yp</color>
     <color name="background_button">@color/black_yp</color>
+    <color name="background_button_update">@color/white</color>
 
     <color name="icon_button">@color/black_yp</color>
     <color name="icon_switch">@color/white</color>
@@ -27,9 +29,15 @@
     <color name="icon_hint">@color/black_yp</color>
     <color name="drawable_placeholder">@color/gray</color>
 
+    <color name="drawable_placeholder_note1">@color/white</color>
+    <color name="drawable_placeholder_note2">@color/white</color>
+    <color name="drawable_placeholder_circle1">@color/blue</color>
+    <color name="drawable_placeholder_circle2">@color/yellow</color>
+
     <color name="text_color">@color/black_yp</color>
     <color name="text_color_hint" >@color/black_yp</color>
     <color name="text_button">@color/black_yp</color>
+    <color name="text_button_update">@color/black_yp</color>
     <color name="edittext_color">@color/white</color>
     <color name="text_tool_main">@color/white</color>
     <color name="text_tool">@color/white</color>
