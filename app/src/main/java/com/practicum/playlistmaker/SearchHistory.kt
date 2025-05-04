@@ -11,7 +11,6 @@ class SearchHistory(private val sharedPrefs: SharedPreferences) {
     fun addTrack(track: Track) {
         val editor = sharedPrefs.edit()
 
-
         val jsonTracks = sharedPrefs.getString(HISTORY_TRACKS_KEY, null)
         var historyTracks: ArrayList<Track> = gson.fromJson(jsonTracks, object : TypeToken<ArrayList<Track>>() {}.type) ?: ArrayList()
 
@@ -20,7 +19,6 @@ class SearchHistory(private val sharedPrefs: SharedPreferences) {
         historyTracks.add(0, track)
 
         if (historyTracks.size > 10) {
-            //historyTracks = historyTracks.subList(0, 10) as ArrayList<Track>
             historyTracks = ArrayList(historyTracks.subList(0, 10))
         }
 
@@ -32,7 +30,7 @@ class SearchHistory(private val sharedPrefs: SharedPreferences) {
     fun clearHistory() {
         with(sharedPrefs.edit()) {
             remove(HISTORY_TRACKS_KEY)
-            apply()
+            commit()
         }
     }
 
