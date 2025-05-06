@@ -29,7 +29,7 @@ class TracksViewHolder(parent: View) :
             .load(model.artworkUrl100)
             .centerCrop()
             .transform(RoundedCorners(2))
-            .placeholder(R.drawable.placeholder)
+            .placeholder(R.drawable.placeholder_track)
             .into(artworkUrl100)
     }
 }

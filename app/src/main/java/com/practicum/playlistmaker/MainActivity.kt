@@ -21,8 +21,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         // реализация клика через анонимный класс
-        val searchButton=findViewById<Button>(R.id.btn_search)
-        
+        val searchButton = findViewById<Button>(R.id.btn_search)
+
         val searchButtonClickListener: View.OnClickListener = object : View.OnClickListener {
             override fun onClick(v: View?) {
                 val searchIntent = Intent(this@MainActivity, SearchActivity::class.java)
