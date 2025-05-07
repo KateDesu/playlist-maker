@@ -1,9 +1,12 @@
 package com.practicum.playlistmaker
 
 import android.app.Application.MODE_PRIVATE
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 
 class TracksAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -27,6 +30,14 @@ class TracksAdapter(
             val searchHistory = SearchHistory(preferences)
 
             searchHistory.addTrack(track)
+
+            val gson = Gson()
+            val trackJsonString: String = gson.toJson(track)
+
+            val trackIntent = Intent(holder.itemView.context, TrackActivity::class.java)
+            trackIntent.putExtra("trackJson", trackJsonString)
+            Log.d("trackJson", trackJsonString)
+            holder.itemView.context.startActivity(trackIntent)
         }
     }
 
