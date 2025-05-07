@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import java.text.SimpleDateFormat
 import java.util.Locale
+import kotlin.math.roundToInt
 
 class TracksViewHolder(parent: View) :
         RecyclerView.ViewHolder(parent) {
@@ -25,10 +26,12 @@ class TracksViewHolder(parent: View) :
         trackTime.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(model.trackTime.toLong())
         Log.d("trackTime", trackTime.text.toString())
 
+        val radius = 2 * itemView.context.resources.displayMetrics.density + 0.5f
+
         Glide.with(itemView.context)
             .load(model.artworkUrl100)
             .centerCrop()
-            .transform(RoundedCorners(2))
+            .transform(RoundedCorners(radius.roundToInt()))
             .placeholder(R.drawable.placeholder_track)
             .into(artworkUrl100)
     }

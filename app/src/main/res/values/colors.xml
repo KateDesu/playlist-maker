@@ -28,7 +28,7 @@
     <color name="icon_secondary">@color/gray</color>
     <color name="icon_hint">@color/gray</color>
     <color name="drawable_placeholder">@color/gray</color>
-    <color name="icon_round_button">@color/gray_light</color>
+    <color name="icon_round_button">#1A1B22</color>
 
     <color name="drawable_placeholder_note1">@color/black_yp</color>
     <color name="drawable_placeholder_note2">@color/black_yp</color>

@@ -81,10 +81,10 @@
 
     <ImageButton
         android:id="@+id/ibSeen"
-        android:layout_width="42dp"
-        android:layout_height="42dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="42dp"
-        android:background="@drawable/round_button"
+        android:background="@color/background_secondary"
         android:src="@drawable/ic_seen_button"
         app:layout_constraintEnd_toStartOf="@+id/ibPlayStop"
         app:layout_constraintBottom_toBottomOf="@+id/ibPlayStop"
@@ -104,12 +104,11 @@
         app:layout_constraintTop_toBottomOf="@+id/tvArtistName" />
 
     <ImageButton
-        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/ibFavorite"
-        android:layout_width="42dp"
-        android:layout_height="42dp"
         android:layout_marginTop="42dp"
-        android:background="@drawable/round_button"
+        android:background="@color/background_secondary"
         android:src="@drawable/ic_favorite_button"
         app:layout_constraintBottom_toBottomOf="@+id/ibPlayStop"
         app:layout_constraintEnd_toEndOf="@id/right_guideline"

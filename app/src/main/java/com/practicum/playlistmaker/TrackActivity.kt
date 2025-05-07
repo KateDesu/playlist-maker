@@ -13,8 +13,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.gson.Gson
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.Locale
+import kotlin.math.roundToInt
 
 class TrackActivity : AppCompatActivity() {
 
@@ -50,18 +50,14 @@ class TrackActivity : AppCompatActivity() {
 
         val enlargedImageUrl = track.artworkUrl100.replaceAfterLast('/', "512x512bb.jpg")
 
+        val radius = 8 * this.getResources().displayMetrics.density + 0.5f
+
         Glide.with(this)
             .load(enlargedImageUrl)
             .centerCrop()
-            .transform(RoundedCorners(2))
+            .transform(RoundedCorners(radius.roundToInt()))
             .placeholder(R.drawable.placeholder_track_big)
             .into(ivCover)
-
-        /*val year: String = if (track.releaseDate != null) {
-            track.releaseDate.year.toString()
-        } else {
-            ""
-        }*/
 
         tvTrackName.text = track.trackName
         tvArtistName.text = track.artistName
