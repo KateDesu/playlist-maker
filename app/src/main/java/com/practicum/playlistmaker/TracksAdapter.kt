@@ -21,7 +21,7 @@ class TracksAdapter(
 
     private val handler = Handler(Looper.getMainLooper())
 
-    private fun clickDebounce() : Boolean {
+    private fun clickDebounce(): Boolean {
         val current = isClickAllowed
         if (isClickAllowed) {
             isClickAllowed = false
@@ -43,7 +43,10 @@ class TracksAdapter(
         holder.itemView.setOnClickListener {
             val track = tracks[position]
 
-            val preferences = holder.itemView.context.getSharedPreferences(PLAYLISTMAKER_PREFERENCES, MODE_PRIVATE)
+            val preferences = holder.itemView.context.getSharedPreferences(
+                PLAYLISTMAKER_PREFERENCES,
+                MODE_PRIVATE
+            )
 
             val searchHistory = SearchHistory(preferences)
 
