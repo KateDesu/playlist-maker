@@ -33,7 +33,6 @@
             android:drawableStart="@drawable/ic_search_small"
             android:drawablePadding="@dimen/icon_padding_8"
             android:hint="@string/search_hint"
-            android:imeOptions="actionDone"
             android:singleLine="true" />
 
         <ImageView
