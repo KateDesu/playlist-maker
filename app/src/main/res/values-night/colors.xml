@@ -45,4 +45,6 @@
     <color name="text_view">@color/white</color>
     <color name="text_view_small">@color/white</color>
     <color name="text_view_about">@color/gray</color>
+
+    <color name="progress_bar">@color/blue</color>
 </resources>
