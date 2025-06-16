@@ -25,12 +25,8 @@ class TrackActivity : AppCompatActivity() {
     private lateinit var ibPlay: ImageButton
     private var mediaPlayer = MediaPlayer()
 
-    companion object {
-        private const val STATE_DEFAULT = 0
-        private const val STATE_PREPARED = 1
-        private const val STATE_PLAYING = 2
-        private const val STATE_PAUSED = 3
-    }
+    private val dateFormat by lazy { SimpleDateFormat("mm:ss", Locale.getDefault()) }
+
     private var playerState = STATE_DEFAULT
 
     private var url: String?=null
@@ -148,7 +144,6 @@ class TrackActivity : AppCompatActivity() {
     private fun pausePlayer() {
         mediaPlayer.pause()
         ibPlay.setImageResource(R.drawable.ic_play_track_button)
-        Log.d("player", "PLAY")
         playerState = STATE_PAUSED
     }
 
@@ -158,14 +153,22 @@ class TrackActivity : AppCompatActivity() {
 
     private fun updateTrackTime() {
         if (mediaPlayer.isPlaying) {
-            tvTrackTime.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(mediaPlayer.currentPosition)
+            tvTrackTime.text = dateFormat.format(mediaPlayer.currentPosition)
             handler.postDelayed({
                 updateTrackTime() // рекурсивно вызываем метод для обновления времени
-            }, 300) // задержка в 300 мс
+            }, UPDATE_INTERVAL_MS) // задержка в 300 мс
         }
     }
 
     fun stopTimer() {
         handler.removeCallbacksAndMessages(null)
+    }
+
+    companion object {
+        private const val STATE_DEFAULT = 0
+        private const val STATE_PREPARED = 1
+        private const val STATE_PLAYING = 2
+        private const val STATE_PAUSED = 3
+        private const val UPDATE_INTERVAL_MS = 300L
     }
 }

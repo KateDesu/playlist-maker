@@ -13,10 +13,6 @@ class TracksAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var tracks = ArrayList<Track>()
 
-    companion object {
-        private const val CLICK_DEBOUNCE_DELAY = 1000L
-    }
-
     private var isClickAllowed = true
 
     private val handler = Handler(Looper.getMainLooper())
@@ -66,5 +62,9 @@ class TracksAdapter(
 
     override fun getItemCount(): Int {
         return tracks.size
+    }
+
+    companion object {
+        private const val CLICK_DEBOUNCE_DELAY = 1000L
     }
 }
