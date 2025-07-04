@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker
+package com.practicum.playlistmaker.ui.tracks
 
 import android.app.Application.MODE_PRIVATE
 import android.content.Intent
@@ -8,6 +8,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
+import com.practicum.playlistmaker.PLAYLISTMAKER_PREFERENCES
+import com.practicum.playlistmaker.R
+import com.practicum.playlistmaker.SearchHistory
+import com.practicum.playlistmaker.domain.models.Track
 
 class TracksAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

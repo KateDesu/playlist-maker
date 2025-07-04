@@ -26,7 +26,7 @@
             android:name=".SettingsActivity"
             android:exported="false"></activity>
         <activity
-            android:name=".TrackActivity"
+            android:name=".ui.tracks.TrackActivity"
             android:exported="false"></activity>
         <activity
             android:name=".MainActivity"
