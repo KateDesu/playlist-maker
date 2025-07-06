@@ -5,7 +5,7 @@
     android:id="@+id/main"
     style="@style/ActivityMainStyle"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar_main"

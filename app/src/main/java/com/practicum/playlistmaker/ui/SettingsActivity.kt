@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker
+package com.practicum.playlistmaker.ui
 
 import android.content.Intent
 import android.net.Uri
@@ -11,6 +11,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.switchmaterial.SwitchMaterial
+import com.practicum.playlistmaker.App
+import com.practicum.playlistmaker.PLAYLISTMAKER_PREFERENCES
+import com.practicum.playlistmaker.R
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var themeSwitch: SwitchMaterial
@@ -33,8 +36,7 @@ class SettingsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         toolbar.setNavigationOnClickListener {
-            val toolbarIntent = Intent(this, MainActivity::class.java)
-            startActivity(toolbarIntent)
+            finish()
         }
 
         val shareTextView = findViewById<TextView>(R.id.tvShareApp)

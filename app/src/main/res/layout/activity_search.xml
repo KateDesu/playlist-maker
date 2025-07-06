@@ -5,7 +5,7 @@
     android:id="@+id/search"
     style="@style/ActivitySearchStyle"
     android:orientation="vertical"
-    tools:context=".SearchActivity">
+    tools:context=".ui.SearchActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"

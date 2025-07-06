@@ -1,6 +1,6 @@
 package com.practicum.playlistmaker.data.dto
 
-class TracksResponse(
+class TracksSearchResponse(
     val searchType: String,
     val expression: String,
     val results: List<TrackDto>

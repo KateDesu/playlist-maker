@@ -6,7 +6,11 @@ import com.practicum.playlistmaker.domain.api.TracksInteractor
 import com.practicum.playlistmaker.domain.api.TracksRepository
 import com.practicum.playlistmaker.domain.impl.TracksInteractorImpl
 
-class Creator {
+object Creator {
+    private fun getTrackNetworkClient(): RetrofitNetworkClient {
+        return RetrofitNetworkClient()
+    }
+
     private fun getTracksRepository(): TracksRepository {
         return TracksRepositoryImpl(RetrofitNetworkClient())
     }

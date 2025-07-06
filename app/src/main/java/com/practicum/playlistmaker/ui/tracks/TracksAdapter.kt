@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.practicum.playlistmaker.PLAYLISTMAKER_PREFERENCES
 import com.practicum.playlistmaker.R
-import com.practicum.playlistmaker.SearchHistory
+import com.practicum.playlistmaker.ui.SearchHistory
 import com.practicum.playlistmaker.domain.models.Track
 
 class TracksAdapter(
