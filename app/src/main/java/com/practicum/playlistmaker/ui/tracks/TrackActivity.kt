@@ -4,7 +4,6 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -56,7 +55,6 @@ class TrackActivity : AppCompatActivity() {
         val trackJson = intent.getStringExtra("trackJson")
         val gson = Gson()
         val track: Track = gson.fromJson(trackJson, Track::class.java)
-        Log.d("trackJson", trackJson.toString())
         url = track.previewUrl
 
         val ivCover = findViewById<ImageView>(R.id.ivCover)
@@ -82,7 +80,7 @@ class TrackActivity : AppCompatActivity() {
 
         tvTrackName.text = track.trackName
         tvArtistName.text = track.artistName
-        tvDurationValue.text =  SimpleDateFormat("mm:ss", Locale.getDefault()).format(track.trackTime.toLong())
+        tvDurationValue.text=track.trackTime
         tvCollectionNameValue.text = track.collectionName
         tvReleaseDateValue.text = track.releaseDate.substring(0, 4)
         tvPrimaryGenreNameValue.text = track.primaryGenreName
@@ -125,7 +123,6 @@ class TrackActivity : AppCompatActivity() {
         }
         mediaPlayer.setOnCompletionListener {
             ibPlay.setImageResource(R.drawable.ic_play_track_button)
-            Log.d("player", "PLAY")
             playerState = STATE_PREPARED
 
             stopTimer()
@@ -136,7 +133,6 @@ class TrackActivity : AppCompatActivity() {
     private fun startPlayer() {
         mediaPlayer.start()
         ibPlay.setImageResource(R.drawable.ic_stop_track_button)
-        Log.d("player", "PAUSE")
         playerState = STATE_PLAYING
 
         startTimer()

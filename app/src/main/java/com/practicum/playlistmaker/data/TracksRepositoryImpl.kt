@@ -5,6 +5,7 @@ import com.practicum.playlistmaker.data.dto.TracksSearchRequest
 import com.practicum.playlistmaker.domain.api.TracksRepository
 import com.practicum.playlistmaker.domain.models.Track
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 class TracksRepositoryImpl(private val networkClient: NetworkClient) : TracksRepository {
@@ -18,7 +19,7 @@ class TracksRepositoryImpl(private val networkClient: NetworkClient) : TracksRep
                     it.trackId,
                     it.trackName,
                     it.artistName,
-                    SimpleDateFormat("mm:ss", Locale.getDefault()).format(it.trackTimeMillis),
+                    formatTimeMillis(it.trackTimeMillis),
                     it.artworkUrl100,
                     it.collectionName,
                     it.releaseDate,
@@ -30,5 +31,10 @@ class TracksRepositoryImpl(private val networkClient: NetworkClient) : TracksRep
         } else {
             return emptyList()
         }
+    }
+
+    private fun formatTimeMillis(durationMillis: Long): String {
+        return SimpleDateFormat("mm:ss", Locale.getDefault())
+            .format(Date(durationMillis))
     }
 }

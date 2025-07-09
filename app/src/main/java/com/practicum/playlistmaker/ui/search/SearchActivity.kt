@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker.ui
+package com.practicum.playlistmaker.ui.search
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -6,7 +6,6 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -22,68 +21,43 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
+import com.practicum.playlistmaker.Creator
 import com.practicum.playlistmaker.PLAYLISTMAKER_PREFERENCES
 import com.practicum.playlistmaker.R
-import com.practicum.playlistmaker.data.TracksRepositoryImpl
-import com.practicum.playlistmaker.data.network.ITunesSearchApi
-import com.practicum.playlistmaker.data.network.RetrofitNetworkClient
+import com.practicum.playlistmaker.domain.api.SearchHistoryInteractor
 import com.practicum.playlistmaker.domain.api.TracksInteractor
-import com.practicum.playlistmaker.domain.impl.TracksInteractorImpl
 import com.practicum.playlistmaker.domain.models.Track
 import com.practicum.playlistmaker.ui.tracks.TracksAdapter
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 const val HISTORY_TRACKS_KEY = "history_tracks_key"
 
 class SearchActivity : AppCompatActivity() {
     private var searchInput: String? = null
 
-    companion object {
-        private const val KEY_SEARCH_INPUT = "search_input"
-
-        private const val SEARCH_DEBOUNCE_DELAY = 2000L
-    }
-
     private val handler = Handler(Looper.getMainLooper())
-
     private val searchRunnable = Runnable { searchTracks() }
 
-    private fun searchDebounce() {
-        handler.removeCallbacks(searchRunnable)
-        handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
-    }
-
-    private val itunesBaseUrl = "https://itunes.apple.com/"
-
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(itunesBaseUrl)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-
-    private val iTunesService = retrofit.create(ITunesSearchApi::class.java)
-
     private lateinit var clearButton: ImageView
-
     private lateinit var searchEditText: EditText
+
     private lateinit var recyclerViewTracks: RecyclerView
+    private val tracks = ArrayList<Track>()
+    private val tracksAdapter = TracksAdapter()
 
     private lateinit var viewHistoryTracks: LinearLayout
     private lateinit var recyclerViewTracksHistory: RecyclerView
-    private lateinit var clearHistoryButton: Button
+    private var tracksHistory = ArrayList<Track>()
+    private val tracksHistoryAdapter = TracksAdapter()
 
     private lateinit var placeholderViewNoInternet: LinearLayout
     private lateinit var placeholderViewNothingFound: LinearLayout
     private lateinit var placeholderButton: Button
 
+    private lateinit var clearHistoryButton: Button
     private lateinit var flProgressBar: FrameLayout
 
-    private val tracks = ArrayList<Track>()
-    private var tracksHistory = ArrayList<Track>()
-
-    private val tracksAdapter = TracksAdapter()
-    private val tracksHistoryAdapter = TracksAdapter()
-
+    private lateinit var tracksInteractor: TracksInteractor
+    private lateinit var searchHistoryInteractor: SearchHistoryInteractor
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -97,16 +71,13 @@ class SearchActivity : AppCompatActivity() {
             insets
         }
 
+        // настройка Tollbar  с кнопкой "Назад"
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-
-        // Включаем кнопку "Назад" в Toolbar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         toolbar.setNavigationOnClickListener {
             finish()
         }
-
 
         clearButton = findViewById(R.id.ivClearIcon)
         searchEditText = findViewById(R.id.etSearch)
@@ -116,33 +87,50 @@ class SearchActivity : AppCompatActivity() {
         placeholderViewNothingFound = findViewById(R.id.llPlaceholderNothingFound)
         placeholderButton = findViewById(R.id.btnUpdate)
 
-        recyclerViewTracksHistory = findViewById(R.id.rvTracksHistory)
         viewHistoryTracks = findViewById(R.id.llTracksHistory)
+        recyclerViewTracksHistory = findViewById(R.id.rvTracksHistory)
         clearHistoryButton = findViewById(R.id.btnClearHistory)
 
-        tracksAdapter.tracks = tracks
+        flProgressBar = findViewById(R.id.flProgressBar)
 
+        // настройка RecyclerViews и адаптеров для треков и истории поиска
+        tracksAdapter.tracks = tracks
         recyclerViewTracks.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerViewTracks.adapter = tracksAdapter
 
-        flProgressBar = findViewById(R.id.flProgressBar)
+        // реализация отображения / скрытия истории поиска
+        val sharedPrefs = getSharedPreferences(PLAYLISTMAKER_PREFERENCES, MODE_PRIVATE)
+        searchHistoryInteractor = Creator.provideSearchHistoryInteractor(this)
+        searchHistoryInteractor.getTracksHistory(object : SearchHistoryInteractor.SearchConsumer {
+            override fun consume(history: List<Track>) {
+                tracksHistory.clear()
+                tracksHistory.addAll(history)
+                tracksHistoryAdapter.notifyDataSetChanged()
+            }
+        })
 
+        recyclerViewTracksHistory.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerViewTracksHistory.adapter = tracksHistoryAdapter
+
+        // обработка текста в поисковом поле с debounce для поиска треков
         searchEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                clearButton.visibility = clearButtonVisibility(s)
+                clearButton.visibility =
+                    if (s.isEmpty()) View.GONE else View.VISIBLE
+
+                viewHistoryTracks.visibility =
+                    if (searchEditText.hasFocus() && s.isEmpty() && tracksHistory.isNotEmpty()) View.VISIBLE else View.GONE
+
                 searchInput = s.toString()
                 searchDebounce()
             }
 
             override fun afterTextChanged(s: Editable) {}
         })
-
-        placeholderButton.setOnClickListener {
-            searchTracks()
-        }
 
         clearButton.setOnClickListener {
             searchEditText.setText("")
@@ -155,55 +143,27 @@ class SearchActivity : AppCompatActivity() {
             showMessage("", "")
         }
 
-        // реализация отображения / скрытия истории поиска
-        val sharedPrefs = getSharedPreferences(PLAYLISTMAKER_PREFERENCES, MODE_PRIVATE)
-        val searchHistory = SearchHistory(sharedPrefs)
-
-        tracksHistory = searchHistory.getTracksHistory()
-
-        tracksHistoryAdapter.tracks = tracksHistory
-        tracksHistoryAdapter.notifyDataSetChanged()
-
-        recyclerViewTracksHistory.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        recyclerViewTracksHistory.adapter = tracksHistoryAdapter
-
-
-        searchEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                viewHistoryTracks.visibility =
-                    if (searchEditText.hasFocus() && s?.isEmpty() == true && tracksHistory.isNotEmpty()) View.VISIBLE else View.GONE
-
-                if (s?.isEmpty() == true) {
-                    // Обновляем список истории поиска
-                    tracksHistory = searchHistory.getTracksHistory()
-                    tracksHistoryAdapter.tracks = tracksHistory
-                    tracksHistoryAdapter.notifyDataSetChanged()
-                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-            }
-        })
-
         searchEditText.setOnFocusChangeListener { _, hasFocus ->
             viewHistoryTracks.visibility =
                 if (hasFocus && searchEditText.text.isEmpty() && tracksHistory.isNotEmpty()) View.VISIBLE else View.GONE
         }
 
+        placeholderButton.setOnClickListener {
+            searchTracks()
+        }
+
         // очистка истории поиска
         clearHistoryButton.setOnClickListener {
-            searchHistory.clearHistory()
-
+            searchHistoryInteractor.clearHistory()
             tracksHistory.clear()
-            Log.d("MyAdapter", "2 Список данных обновлен перед вызовом notifyDataSetChanged()")
             tracksHistoryAdapter.notifyDataSetChanged()
-
             viewHistoryTracks.visibility = View.GONE
         }
+    }
+
+    private fun searchDebounce() {
+        handler.removeCallbacks(searchRunnable)
+        handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
     }
 
     private fun searchTracks() {
@@ -211,34 +171,43 @@ class SearchActivity : AppCompatActivity() {
         placeholderViewNoInternet.visibility = View.GONE
         placeholderViewNothingFound.visibility = View.GONE
 
+        tracksInteractor = Creator.provideTracksInteractor()
 
-        val networkClient = RetrofitNetworkClient()
-        val repository = TracksRepositoryImpl(networkClient)
-        val tracksInteractor = TracksInteractorImpl(repository)
-
-        tracksInteractor.searchTracks(searchEditText.text.toString(), object : TracksInteractor.TracksConsumer {
-            @SuppressLint("NotifyDataSetChanged")
-            override fun consume(foundTracks: List<Track>) {
-                flProgressBar.visibility = View.GONE
-                tracks.clear()
-                if (foundTracks.isNotEmpty()) {
-                    tracks.addAll(foundTracks)
-                    tracksAdapter.notifyDataSetChanged()
-                    placeholderViewNothingFound.visibility = View.GONE
-                    showMessage("", "")
-                } else {
-                    placeholderViewNothingFound.visibility = View.VISIBLE
-                    showMessage(getString(R.string.nothing_found), "")
+        tracksInteractor.searchTracks(
+            searchEditText.text.toString(),
+            object : TracksInteractor.TracksConsumer {
+                @SuppressLint("NotifyDataSetChanged")
+                override fun consume(foundTracks: List<Track>) {
+                    handler.post {
+                        flProgressBar.visibility = View.GONE
+                        tracks.clear()
+                        if (foundTracks.isNotEmpty()) {
+                            tracks.addAll(foundTracks)
+                            tracksAdapter.notifyDataSetChanged()
+                            placeholderViewNothingFound.visibility = View.GONE
+                            showMessage("", "")
+                        } else {
+                            placeholderViewNothingFound.visibility = View.VISIBLE
+                            showMessage(getString(R.string.nothing_found), "")
+                        }
+                    }
                 }
-            }
-        })
+            })
     }
 
-    private fun clearButtonVisibility(s: CharSequence?): Int {
-        return if (s.isNullOrEmpty()) {
-            View.GONE
+    @SuppressLint("NotifyDataSetChanged")
+    private fun showMessage(text: String, additionalMessage: String) {
+        if (text.isNotEmpty()) {
+            tracks.clear()
+            tracksAdapter.notifyDataSetChanged()
+
+            if (additionalMessage.isNotEmpty()) {
+                Toast.makeText(applicationContext, additionalMessage, Toast.LENGTH_LONG)
+                    .show()
+            }
         } else {
-            View.VISIBLE
+            placeholderViewNoInternet.visibility = View.GONE
+            placeholderViewNothingFound.visibility = View.GONE
         }
     }
 
@@ -252,22 +221,9 @@ class SearchActivity : AppCompatActivity() {
         searchInput = savedInstanceState.getString(KEY_SEARCH_INPUT)
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    private fun showMessage(text: String, additionalMessage: String) {
-        if (text.isNotEmpty()) {
-            tracks.clear()
-            Log.d(
-                "MyAdapter",
-                "4 Список данных tracksAdapter обновлен перед вызовом notifyDataSetChanged()"
-            )
-            tracksAdapter.notifyDataSetChanged()
-            if (additionalMessage.isNotEmpty()) {
-                Toast.makeText(applicationContext, additionalMessage, Toast.LENGTH_LONG)
-                    .show()
-            }
-        } else {
-            placeholderViewNoInternet.visibility = View.GONE
-            placeholderViewNothingFound.visibility = View.GONE
-        }
+    companion object {
+        private const val KEY_SEARCH_INPUT = "search_input"
+
+        private const val SEARCH_DEBOUNCE_DELAY = 2000L
     }
 }
