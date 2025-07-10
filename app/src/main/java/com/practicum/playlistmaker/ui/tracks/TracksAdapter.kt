@@ -4,21 +4,24 @@ import android.app.Application.MODE_PRIVATE
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View.OnClickListener
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
-import com.practicum.playlistmaker.Creator
 import com.practicum.playlistmaker.PLAYLISTMAKER_PREFERENCES
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.data.dto.SearchHistory
-import com.practicum.playlistmaker.domain.api.SearchHistoryInteractor
 import com.practicum.playlistmaker.domain.models.Track
 
 class TracksAdapter(
+    private val onItemClickListener: (Track) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var tracks = ArrayList<Track>()
+
     private var isClickAllowed = true
+
     private val handler = Handler(Looper.getMainLooper())
 
     private fun clickDebounce(): Boolean {
@@ -38,26 +41,13 @@ class TracksAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder as TracksViewHolder
-        holder.bind(tracks[position])
+        val track = tracks[position]
+        holder.bind(track)
 
         holder.itemView.setOnClickListener {
-            val track = tracks[position]
-
-            val preferences = holder.itemView.context.getSharedPreferences(
-                PLAYLISTMAKER_PREFERENCES,
-                MODE_PRIVATE
-            )
-
-            val searchHistory = SearchHistory(preferences)
-
-            val gson = Gson()
-            val trackJsonString: String = gson.toJson(track)
-
             if (clickDebounce()) {
-                val trackIntent = Intent(holder.itemView.context, TrackActivity::class.java)
-
-                trackIntent.putExtra("trackJson", trackJsonString)
-                holder.itemView.context.startActivity(trackIntent)
+                Log.d("listener","Adapter")
+                onItemClickListener(track)
             }
         }
     }

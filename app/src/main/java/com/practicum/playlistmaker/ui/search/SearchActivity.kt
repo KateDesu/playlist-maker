@@ -1,11 +1,14 @@
 package com.practicum.playlistmaker.ui.search
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -21,12 +24,14 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.gson.Gson
 import com.practicum.playlistmaker.Creator
 import com.practicum.playlistmaker.PLAYLISTMAKER_PREFERENCES
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.domain.api.SearchHistoryInteractor
 import com.practicum.playlistmaker.domain.api.TracksInteractor
 import com.practicum.playlistmaker.domain.models.Track
+import com.practicum.playlistmaker.ui.tracks.TrackActivity
 import com.practicum.playlistmaker.ui.tracks.TracksAdapter
 
 const val HISTORY_TRACKS_KEY = "history_tracks_key"
@@ -42,12 +47,12 @@ class SearchActivity : AppCompatActivity() {
 
     private lateinit var recyclerViewTracks: RecyclerView
     private val tracks = ArrayList<Track>()
-    private val tracksAdapter = TracksAdapter()
+    private lateinit var tracksAdapter: TracksAdapter
 
     private lateinit var viewHistoryTracks: LinearLayout
     private lateinit var recyclerViewTracksHistory: RecyclerView
     private var tracksHistory = ArrayList<Track>()
-    private val tracksHistoryAdapter = TracksAdapter()
+    private lateinit var tracksHistoryAdapter: TracksAdapter
 
     private lateinit var placeholderViewNoInternet: LinearLayout
     private lateinit var placeholderViewNothingFound: LinearLayout
@@ -93,19 +98,42 @@ class SearchActivity : AppCompatActivity() {
 
         flProgressBar = findViewById(R.id.flProgressBar)
 
+        searchHistoryInteractor = Creator.provideSearchHistoryInteractor(this)
+
         // настройка RecyclerViews и адаптеров для треков и истории поиска
+        tracksAdapter= TracksAdapter { track ->
+            Log.d("listener", "tracksAdapter")
+            searchHistoryInteractor.addTrack(track)
+
+            val gson = Gson()
+            val trackJsonString = gson.toJson(track)
+            val intent = Intent(this, TrackActivity::class.java).apply {
+                putExtra("trackJson", trackJsonString)
+            }
+            startActivity(intent)
+        }
         tracksAdapter.tracks = tracks
         recyclerViewTracks.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerViewTracks.adapter = tracksAdapter
 
-        // реализация отображения / скрытия истории поиска
-        val sharedPrefs = getSharedPreferences(PLAYLISTMAKER_PREFERENCES, MODE_PRIVATE)
-        searchHistoryInteractor = Creator.provideSearchHistoryInteractor(this)
+        tracksHistoryAdapter = TracksAdapter { track ->
+            Log.d("listener", "tracksHistoryAdapter")
+            searchHistoryInteractor.addTrack(track)
+
+            val gson = Gson()
+            val trackJsonString = gson.toJson(track)
+            val intent = Intent(this, TrackActivity::class.java).apply {
+                putExtra("trackJson", trackJsonString)
+            }
+            startActivity(intent)
+        }
         searchHistoryInteractor.getTracksHistory(object : SearchHistoryInteractor.SearchConsumer {
             override fun consume(history: List<Track>) {
+                Log.d("listener", "searchHistoryInteractor ${history}")
                 tracksHistory.clear()
                 tracksHistory.addAll(history)
+                Log.d("listener", "tracksHistory ${tracksHistory.size}")
                 tracksHistoryAdapter.notifyDataSetChanged()
             }
         })
