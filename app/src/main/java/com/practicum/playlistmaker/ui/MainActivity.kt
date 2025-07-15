@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
 
         searchButton.setOnClickListener(searchButtonClickListener)
 
-
         // реализация клика через лямбда-выражение
         val libraryButton = findViewById<Button>(R.id.btn_library)
 

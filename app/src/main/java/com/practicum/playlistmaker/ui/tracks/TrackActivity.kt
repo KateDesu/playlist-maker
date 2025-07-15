@@ -144,7 +144,7 @@ class TrackActivity : AppCompatActivity() {
         playerState = STATE_PAUSED
     }
 
-    fun startTimer() {
+    private fun startTimer() {
         updateTrackTime()
     }
 
@@ -157,7 +157,7 @@ class TrackActivity : AppCompatActivity() {
         }
     }
 
-    fun stopTimer() {
+    private fun stopTimer() {
         handler.removeCallbacksAndMessages(null)
     }
 

@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker.data
+package com.practicum.playlistmaker.data.repository
 
 import com.practicum.playlistmaker.data.dto.SearchHistory
 import com.practicum.playlistmaker.domain.api.SearchHistoryRepository

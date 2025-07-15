@@ -1,18 +1,12 @@
-package com.practicum.playlistmaker.ui.tracks
+package com.practicum.playlistmaker.ui.search
 
-import android.app.Application.MODE_PRIVATE
-import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View.OnClickListener
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
-import com.practicum.playlistmaker.PLAYLISTMAKER_PREFERENCES
 import com.practicum.playlistmaker.R
-import com.practicum.playlistmaker.data.dto.SearchHistory
 import com.practicum.playlistmaker.domain.models.Track
 
 class TracksAdapter(
@@ -46,7 +40,7 @@ class TracksAdapter(
 
         holder.itemView.setOnClickListener {
             if (clickDebounce()) {
-                Log.d("listener","Adapter")
+                Log.d("listener", "Adapter")
                 onItemClickListener(track)
             }
         }

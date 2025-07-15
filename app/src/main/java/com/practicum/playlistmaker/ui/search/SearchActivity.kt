@@ -2,7 +2,6 @@ package com.practicum.playlistmaker.ui.search
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -26,13 +25,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.gson.Gson
 import com.practicum.playlistmaker.Creator
-import com.practicum.playlistmaker.PLAYLISTMAKER_PREFERENCES
 import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.domain.api.SearchHistoryInteractor
 import com.practicum.playlistmaker.domain.api.TracksInteractor
 import com.practicum.playlistmaker.domain.models.Track
 import com.practicum.playlistmaker.ui.tracks.TrackActivity
-import com.practicum.playlistmaker.ui.tracks.TracksAdapter
 
 const val HISTORY_TRACKS_KEY = "history_tracks_key"
 
@@ -61,8 +58,10 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var clearHistoryButton: Button
     private lateinit var flProgressBar: FrameLayout
 
-    private lateinit var tracksInteractor: TracksInteractor
-    private lateinit var searchHistoryInteractor: SearchHistoryInteractor
+    private val tracksInteractor: TracksInteractor by lazy {
+        Creator.provideTracksInteractor()}
+    private val searchHistoryInteractor: SearchHistoryInteractor by lazy {
+        Creator.provideSearchHistoryInteractor(this)}
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,8 +97,6 @@ class SearchActivity : AppCompatActivity() {
 
         flProgressBar = findViewById(R.id.flProgressBar)
 
-        searchHistoryInteractor = Creator.provideSearchHistoryInteractor(this)
-
         // настройка RecyclerViews и адаптеров для треков и истории поиска
         tracksAdapter= TracksAdapter { track ->
             Log.d("listener", "tracksAdapter")
@@ -130,7 +127,7 @@ class SearchActivity : AppCompatActivity() {
         }
         searchHistoryInteractor.getTracksHistory(object : SearchHistoryInteractor.SearchConsumer {
             override fun consume(history: List<Track>) {
-                Log.d("listener", "searchHistoryInteractor ${history}")
+                Log.d("listener", "searchHistoryInteractor $history")
                 tracksHistory.clear()
                 tracksHistory.addAll(history)
                 Log.d("listener", "tracksHistory ${tracksHistory.size}")
@@ -198,8 +195,6 @@ class SearchActivity : AppCompatActivity() {
         flProgressBar.visibility = View.VISIBLE
         placeholderViewNoInternet.visibility = View.GONE
         placeholderViewNothingFound.visibility = View.GONE
-
-        tracksInteractor = Creator.provideTracksInteractor()
 
         tracksInteractor.searchTracks(
             searchEditText.text.toString(),
