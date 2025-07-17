@@ -6,17 +6,22 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.switchmaterial.SwitchMaterial
-import com.practicum.playlistmaker.App
-import com.practicum.playlistmaker.PLAYLISTMAKER_PREFERENCES
+import com.practicum.playlistmaker.Creator
 import com.practicum.playlistmaker.R
+import com.practicum.playlistmaker.domain.api.ThemeSettingsInteractor
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var themeSwitch: SwitchMaterial
+
+    private val themeSettingsInteractor: ThemeSettingsInteractor by lazy {
+        Creator.provideThemeSettingsInteractor(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +40,7 @@ class SettingsActivity : AppCompatActivity() {
         // Включаем кнопку "Назад" в Toolbar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        toolbar.setNavigationOnClickListener {
-            finish()
-        }
+        toolbar.setNavigationOnClickListener { finish() }
 
         val shareTextView = findViewById<TextView>(R.id.tvShareApp)
         val urlPracticum = getString(R.string.url_practicum)
@@ -71,14 +74,14 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // переключение на светлую / темную тему
+        // работа с темой через интерактор
         themeSwitch = findViewById(R.id.smThemeSwitcher)
-
-        themeSwitch.isChecked = (application as App).darkTheme
-
-        themeSwitch.setOnCheckedChangeListener { switcher, checked ->
-            (applicationContext as App).switchTheme(checked)
-            val sharedPrefs = getSharedPreferences(PLAYLISTMAKER_PREFERENCES, MODE_PRIVATE)
+        themeSwitch.isChecked = themeSettingsInteractor.isDarkTheme()
+        themeSwitch.setOnCheckedChangeListener { _, checked ->
+            themeSettingsInteractor.setDarkTheme(checked)
+            AppCompatDelegate.setDefaultNightMode(
+                if (checked) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+            )
         }
     }
 }

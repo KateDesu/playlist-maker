@@ -1,16 +1,21 @@
 package com.practicum.playlistmaker
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.practicum.playlistmaker.domain.impl.SearchHistoryInteractorImpl
 import com.practicum.playlistmaker.data.repository.SearchHistoryRepositoryImpl
 import com.practicum.playlistmaker.data.repository.TracksRepositoryImpl
 import com.practicum.playlistmaker.data.dto.SearchHistory
 import com.practicum.playlistmaker.data.network.ITunesSearchApi
 import com.practicum.playlistmaker.data.network.RetrofitNetworkClient
+import com.practicum.playlistmaker.data.repository.ThemeSettingsRepositoryImpl
 import com.practicum.playlistmaker.domain.api.SearchHistoryInteractor
 import com.practicum.playlistmaker.domain.api.SearchHistoryRepository
+import com.practicum.playlistmaker.domain.api.ThemeSettingsInteractor
+import com.practicum.playlistmaker.domain.api.ThemeSettingsRepository
 import com.practicum.playlistmaker.domain.api.TracksInteractor
 import com.practicum.playlistmaker.domain.api.TracksRepository
+import com.practicum.playlistmaker.domain.impl.ThemeSettingsInteractorImpl
 import com.practicum.playlistmaker.domain.impl.TracksInteractorImpl
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -39,5 +44,18 @@ object Creator {
 
     fun provideSearchHistoryInteractor(context: Context): SearchHistoryInteractor {
         return SearchHistoryInteractorImpl(getSearchHistoryRepository(context))
+    }
+
+    fun provideThemeSettingsInteractor(context: Context): ThemeSettingsInteractor {
+        return ThemeSettingsInteractorImpl(getThemeSettingsRepository(context)
+        )
+    }
+
+    private fun getThemeSettingsRepository(context: Context): ThemeSettingsRepository {
+        return ThemeSettingsRepositoryImpl(getSharedPreferences(context))
+    }
+
+    private fun getSharedPreferences(context: Context): SharedPreferences {
+        return context.getSharedPreferences("playlistmaker_prefs", Context.MODE_PRIVATE)
     }
 }
