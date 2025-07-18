@@ -7,8 +7,6 @@ import com.practicum.playlistmaker.data.dto.TracksSearchRequest
 class RetrofitNetworkClient(
     private val iTunesService: ITunesSearchApi
 ): NetworkClient {
-
-
     override fun doRequest(dto: Any): Response {
         if (dto is TracksSearchRequest) {
             val resp = iTunesService.search(dto.expression).execute()

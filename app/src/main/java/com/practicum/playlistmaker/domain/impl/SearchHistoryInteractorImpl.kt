@@ -10,10 +10,7 @@ class SearchHistoryInteractorImpl(private val repository: SearchHistoryRepositor
     }
 
     override fun getTracksHistory(consumer: SearchHistoryInteractor.SearchConsumer) {
-        val t = Thread {
-            consumer.consume(repository.getTracksHistory())
-        }
-        t.start()
+        consumer.consume(repository.getTracksHistory())
     }
 
     override fun clearHistory() {

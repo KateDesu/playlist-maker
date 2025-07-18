@@ -31,8 +31,6 @@ import com.practicum.playlistmaker.domain.api.TracksInteractor
 import com.practicum.playlistmaker.domain.models.Track
 import com.practicum.playlistmaker.ui.tracks.TrackActivity
 
-const val HISTORY_TRACKS_KEY = "history_tracks_key"
-
 class SearchActivity : AppCompatActivity() {
     private var searchInput: String? = null
 
@@ -66,6 +64,7 @@ class SearchActivity : AppCompatActivity() {
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("SearchActivity", "onCreate: called")
 
         enableEdgeToEdge()
         setContentView(R.layout.activity_search)
@@ -127,10 +126,11 @@ class SearchActivity : AppCompatActivity() {
         }
         searchHistoryInteractor.getTracksHistory(object : SearchHistoryInteractor.SearchConsumer {
             override fun consume(history: List<Track>) {
-                Log.d("listener", "searchHistoryInteractor $history")
+                Log.d("SearchActivity", "getTracksHistory callback: history size = ${history.size}")
                 tracksHistory.clear()
                 tracksHistory.addAll(history)
-                Log.d("listener", "tracksHistory ${tracksHistory.size}")
+                tracksHistoryAdapter.tracks = tracksHistory
+                Log.d("SearchActivity", "tracksHistory after addAll: ${tracksHistory.size}")
                 tracksHistoryAdapter.notifyDataSetChanged()
             }
         })
@@ -144,11 +144,13 @@ class SearchActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                Log.d("SearchActivity", "onTextChanged: s='$s', hasFocus=${searchEditText.hasFocus()}, tracksHistory.size=${tracksHistory.size}")
                 clearButton.visibility =
                     if (s.isEmpty()) View.GONE else View.VISIBLE
 
                 viewHistoryTracks.visibility =
                     if (searchEditText.hasFocus() && s.isEmpty() && tracksHistory.isNotEmpty()) View.VISIBLE else View.GONE
+                Log.d("SearchActivity", "viewHistoryTracks.visibility = ${viewHistoryTracks.visibility}")
 
                 searchInput = s.toString()
                 searchDebounce()
@@ -169,8 +171,10 @@ class SearchActivity : AppCompatActivity() {
         }
 
         searchEditText.setOnFocusChangeListener { _, hasFocus ->
+            Log.d("SearchActivity", "onFocusChange: hasFocus=$hasFocus, text='${searchEditText.text}', tracksHistory.size=${tracksHistory.size}")
             viewHistoryTracks.visibility =
                 if (hasFocus && searchEditText.text.isEmpty() && tracksHistory.isNotEmpty()) View.VISIBLE else View.GONE
+            Log.d("SearchActivity", "viewHistoryTracks.visibility = ${viewHistoryTracks.visibility}")
         }
 
         placeholderButton.setOnClickListener {
@@ -179,10 +183,13 @@ class SearchActivity : AppCompatActivity() {
 
         // очистка истории поиска
         clearHistoryButton.setOnClickListener {
+            Log.d("SearchActivity", "clearHistoryButton clicked")
             searchHistoryInteractor.clearHistory()
             tracksHistory.clear()
+            tracksHistoryAdapter.tracks = tracksHistory
             tracksHistoryAdapter.notifyDataSetChanged()
             viewHistoryTracks.visibility = View.GONE
+            Log.d("SearchActivity", "tracksHistory cleared, viewHistoryTracks.visibility = ${viewHistoryTracks.visibility}")
         }
     }
 

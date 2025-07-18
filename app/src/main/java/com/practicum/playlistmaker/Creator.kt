@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import com.practicum.playlistmaker.domain.impl.SearchHistoryInteractorImpl
 import com.practicum.playlistmaker.data.repository.SearchHistoryRepositoryImpl
 import com.practicum.playlistmaker.data.repository.TracksRepositoryImpl
-import com.practicum.playlistmaker.data.dto.SearchHistory
 import com.practicum.playlistmaker.data.network.ITunesSearchApi
 import com.practicum.playlistmaker.data.network.RetrofitNetworkClient
 import com.practicum.playlistmaker.data.repository.ThemeSettingsRepositoryImpl
@@ -37,9 +36,11 @@ object Creator {
     }
 
     private fun getSearchHistoryRepository(context: Context): SearchHistoryRepository {
-        val sharedPrefs = context.applicationContext.getSharedPreferences(PLAYLISTMAKER_PREFERENCES, Context.MODE_PRIVATE)
-        val searchHistory = SearchHistory(sharedPrefs)
-        return SearchHistoryRepositoryImpl(searchHistory)
+        val sharedPrefs = context.applicationContext.getSharedPreferences(
+            PLAYLISTMAKER_PREFERENCES,
+            Context.MODE_PRIVATE
+        )
+        return SearchHistoryRepositoryImpl(sharedPrefs)
     }
 
     fun provideSearchHistoryInteractor(context: Context): SearchHistoryInteractor {
@@ -47,7 +48,8 @@ object Creator {
     }
 
     fun provideThemeSettingsInteractor(context: Context): ThemeSettingsInteractor {
-        return ThemeSettingsInteractorImpl(getThemeSettingsRepository(context)
+        return ThemeSettingsInteractorImpl(
+            getThemeSettingsRepository(context)
         )
     }
 
