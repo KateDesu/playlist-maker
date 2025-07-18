@@ -10,12 +10,12 @@ import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.domain.models.Track
 
 class TracksAdapter(
+    private var tracks: List<Track>,
     private val onItemClickListener: (Track) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    var tracks = ArrayList<Track>()
+
 
     private var isClickAllowed = true
-
     private val handler = Handler(Looper.getMainLooper())
 
     private fun clickDebounce(): Boolean {
@@ -48,6 +48,11 @@ class TracksAdapter(
 
     override fun getItemCount(): Int {
         return tracks.size
+    }
+
+    fun setTracks(newTracks: List<Track>) {
+        tracks = newTracks
+        notifyDataSetChanged()
     }
 
     companion object {

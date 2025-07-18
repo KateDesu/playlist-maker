@@ -29,6 +29,7 @@ import com.practicum.playlistmaker.R
 import com.practicum.playlistmaker.domain.api.SearchHistoryInteractor
 import com.practicum.playlistmaker.domain.api.TracksInteractor
 import com.practicum.playlistmaker.domain.models.Track
+import com.practicum.playlistmaker.domain.models.TrackSearchResult
 import com.practicum.playlistmaker.ui.tracks.TrackActivity
 
 class SearchActivity : AppCompatActivity() {
@@ -97,7 +98,7 @@ class SearchActivity : AppCompatActivity() {
         flProgressBar = findViewById(R.id.flProgressBar)
 
         // настройка RecyclerViews и адаптеров для треков и истории поиска
-        tracksAdapter= TracksAdapter { track ->
+        tracksAdapter = TracksAdapter(tracks) { track ->
             Log.d("listener", "tracksAdapter")
             searchHistoryInteractor.addTrack(track)
 
@@ -108,12 +109,11 @@ class SearchActivity : AppCompatActivity() {
             }
             startActivity(intent)
         }
-        tracksAdapter.tracks = tracks
         recyclerViewTracks.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerViewTracks.adapter = tracksAdapter
 
-        tracksHistoryAdapter = TracksAdapter { track ->
+        tracksHistoryAdapter = TracksAdapter(tracksHistory) { track ->
             Log.d("listener", "tracksHistoryAdapter")
             searchHistoryInteractor.addTrack(track)
 
@@ -129,9 +129,8 @@ class SearchActivity : AppCompatActivity() {
                 Log.d("SearchActivity", "getTracksHistory callback: history size = ${history.size}")
                 tracksHistory.clear()
                 tracksHistory.addAll(history)
-                tracksHistoryAdapter.tracks = tracksHistory
+                tracksHistoryAdapter.setTracks(tracksHistory)
                 Log.d("SearchActivity", "tracksHistory after addAll: ${tracksHistory.size}")
-                tracksHistoryAdapter.notifyDataSetChanged()
             }
         })
 
@@ -186,11 +185,23 @@ class SearchActivity : AppCompatActivity() {
             Log.d("SearchActivity", "clearHistoryButton clicked")
             searchHistoryInteractor.clearHistory()
             tracksHistory.clear()
-            tracksHistoryAdapter.tracks = tracksHistory
-            tracksHistoryAdapter.notifyDataSetChanged()
+            tracksHistoryAdapter.setTracks(tracksHistory)
             viewHistoryTracks.visibility = View.GONE
             Log.d("SearchActivity", "tracksHistory cleared, viewHistoryTracks.visibility = ${viewHistoryTracks.visibility}")
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        searchHistoryInteractor.getTracksHistory(object : SearchHistoryInteractor.SearchConsumer {
+            override fun consume(history: List<Track>) {
+                Log.d("SearchActivity", "onResume getTracksHistory callback: history size = ${history.size}")
+                tracksHistory.clear()
+                tracksHistory.addAll(history)
+                tracksHistoryAdapter.setTracks(tracksHistory)
+                Log.d("SearchActivity", "tracksHistory after addAll: ${tracksHistory.size}")
+            }
+        })
     }
 
     private fun searchDebounce() {
@@ -203,7 +214,7 @@ class SearchActivity : AppCompatActivity() {
         placeholderViewNoInternet.visibility = View.GONE
         placeholderViewNothingFound.visibility = View.GONE
 
-        tracksInteractor.searchTracks(
+        /*tracksInteractor.searchTracks(
             searchEditText.text.toString(),
             object : TracksInteractor.TracksConsumer {
                 @SuppressLint("NotifyDataSetChanged")
@@ -222,8 +233,33 @@ class SearchActivity : AppCompatActivity() {
                         }
                     }
                 }
-            })
+            }
+        )*/
+        tracksInteractor.searchTracks(
+            searchEditText.text.toString()
+        ) { result ->
+            handler.post {
+                flProgressBar.visibility = View.GONE
+                when (result) {
+                    is TrackSearchResult.Success -> {
+                        tracks.clear()
+                        tracks.addAll(result.tracks)
+                        tracksAdapter.notifyDataSetChanged()
+                        placeholderViewNothingFound.visibility = View.GONE
+                        showMessage("", "")
+                    }
+                    TrackSearchResult.NoInternet -> {
+                        placeholderViewNoInternet.visibility = View.VISIBLE
+                    }
+                    TrackSearchResult.NotFound -> {
+                        placeholderViewNothingFound.visibility = View.VISIBLE
+                        showMessage(getString(R.string.nothing_found), "")
+                    }
+                }
+            }
+        }
     }
+
 
     @SuppressLint("NotifyDataSetChanged")
     private fun showMessage(text: String, additionalMessage: String) {
