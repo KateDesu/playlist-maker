@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker
+package com.practicum.playlistmaker.ui.settings
 
 import android.content.Intent
 import android.net.Uri
@@ -6,14 +6,22 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.switchmaterial.SwitchMaterial
+import com.practicum.playlistmaker.Creator
+import com.practicum.playlistmaker.R
+import com.practicum.playlistmaker.domain.api.ThemeSettingsInteractor
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var themeSwitch: SwitchMaterial
+
+    private val themeSettingsInteractor: ThemeSettingsInteractor by lazy {
+        Creator.provideThemeSettingsInteractor(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,17 +40,14 @@ class SettingsActivity : AppCompatActivity() {
         // Включаем кнопку "Назад" в Toolbar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        toolbar.setNavigationOnClickListener {
-            val toolbarIntent = Intent(this, MainActivity::class.java)
-            startActivity(toolbarIntent)
-        }
+        toolbar.setNavigationOnClickListener { finish() }
 
         val shareTextView = findViewById<TextView>(R.id.tvShareApp)
         val urlPracticum = getString(R.string.url_practicum)
 
-        shareTextView.setOnClickListener{
-            val intent=Intent(Intent.ACTION_SEND)
-            intent.type="text/plain"
+        shareTextView.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
             intent.putExtra(Intent.EXTRA_TEXT, urlPracticum)
             startActivity(intent)
         }
@@ -51,7 +56,7 @@ class SettingsActivity : AppCompatActivity() {
 
         writeToSupportTextView.setOnClickListener {
             val messageHeader = getString(R.string.message_header)
-            val messageBody=getString(R.string.message_body)
+            val messageBody = getString(R.string.message_body)
 
             val intent = Intent(Intent.ACTION_SENDTO)
             intent.data = Uri.parse("mailto:")
@@ -64,19 +69,19 @@ class SettingsActivity : AppCompatActivity() {
         val userAgreementTextView = findViewById<TextView>(R.id.tvUserAgreement)
         val urlAgreement = getString(R.string.url_agreement).toUri()
 
-        userAgreementTextView.setOnClickListener{
-            val intent=Intent(Intent.ACTION_VIEW, urlAgreement)
+        userAgreementTextView.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, urlAgreement)
             startActivity(intent)
         }
 
-        // переключение на светлую / темную тему
+        // работа с темой через интерактор
         themeSwitch = findViewById(R.id.smThemeSwitcher)
-
-        themeSwitch.isChecked = (application as App).darkTheme
-
-        themeSwitch.setOnCheckedChangeListener { switcher, checked ->
-            (applicationContext as App).switchTheme(checked)
-            val sharedPrefs = getSharedPreferences(PLAYLISTMAKER_PREFERENCES, MODE_PRIVATE)
+        themeSwitch.isChecked = themeSettingsInteractor.isDarkTheme()
+        themeSwitch.setOnCheckedChangeListener { _, checked ->
+            themeSettingsInteractor.setDarkTheme(checked)
+            AppCompatDelegate.setDefaultNightMode(
+                if (checked) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+            )
         }
     }
 }

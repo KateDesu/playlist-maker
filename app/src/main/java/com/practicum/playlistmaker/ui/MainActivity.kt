@@ -1,4 +1,4 @@
-package com.practicum.playlistmaker
+package com.practicum.playlistmaker.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +8,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.practicum.playlistmaker.R
+import com.practicum.playlistmaker.ui.library.LibraryActivity
+import com.practicum.playlistmaker.ui.search.SearchActivity
+import com.practicum.playlistmaker.ui.settings.SettingsActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +35,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         searchButton.setOnClickListener(searchButtonClickListener)
-
 
         // реализация клика через лямбда-выражение
         val libraryButton = findViewById<Button>(R.id.btn_library)
