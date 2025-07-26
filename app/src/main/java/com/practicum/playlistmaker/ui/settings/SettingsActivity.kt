@@ -45,9 +45,9 @@ class SettingsActivity : AppCompatActivity() {
         val shareTextView = findViewById<TextView>(R.id.tvShareApp)
         val urlPracticum = getString(R.string.url_practicum)
 
-        shareTextView.setOnClickListener{
-            val intent=Intent(Intent.ACTION_SEND)
-            intent.type="text/plain"
+        shareTextView.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
             intent.putExtra(Intent.EXTRA_TEXT, urlPracticum)
             startActivity(intent)
         }
@@ -56,7 +56,7 @@ class SettingsActivity : AppCompatActivity() {
 
         writeToSupportTextView.setOnClickListener {
             val messageHeader = getString(R.string.message_header)
-            val messageBody=getString(R.string.message_body)
+            val messageBody = getString(R.string.message_body)
 
             val intent = Intent(Intent.ACTION_SENDTO)
             intent.data = Uri.parse("mailto:")
@@ -69,8 +69,8 @@ class SettingsActivity : AppCompatActivity() {
         val userAgreementTextView = findViewById<TextView>(R.id.tvUserAgreement)
         val urlAgreement = getString(R.string.url_agreement).toUri()
 
-        userAgreementTextView.setOnClickListener{
-            val intent=Intent(Intent.ACTION_VIEW, urlAgreement)
+        userAgreementTextView.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, urlAgreement)
             startActivity(intent)
         }
 

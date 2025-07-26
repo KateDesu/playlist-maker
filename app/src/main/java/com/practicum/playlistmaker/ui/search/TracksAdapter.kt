@@ -1,8 +1,8 @@
 package com.practicum.playlistmaker.ui.search
 
+import android.annotation.SuppressLint
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +13,6 @@ class TracksAdapter(
     private var tracks: List<Track>,
     private val onItemClickListener: (Track) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
 
     private var isClickAllowed = true
     private val handler = Handler(Looper.getMainLooper())
@@ -40,7 +39,6 @@ class TracksAdapter(
 
         holder.itemView.setOnClickListener {
             if (clickDebounce()) {
-                Log.d("listener", "Adapter")
                 onItemClickListener(track)
             }
         }
@@ -50,6 +48,7 @@ class TracksAdapter(
         return tracks.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setTracks(newTracks: List<Track>) {
         tracks = newTracks
         notifyDataSetChanged()

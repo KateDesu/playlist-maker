@@ -7,7 +7,6 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -58,14 +57,15 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var flProgressBar: FrameLayout
 
     private val tracksInteractor: TracksInteractor by lazy {
-        Creator.provideTracksInteractor()}
+        Creator.provideTracksInteractor()
+    }
     private val searchHistoryInteractor: SearchHistoryInteractor by lazy {
-        Creator.provideSearchHistoryInteractor(this)}
+        Creator.provideSearchHistoryInteractor(this)
+    }
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("SearchActivity", "onCreate: called")
 
         enableEdgeToEdge()
         setContentView(R.layout.activity_search)
@@ -99,7 +99,6 @@ class SearchActivity : AppCompatActivity() {
 
         // настройка RecyclerViews и адаптеров для треков и истории поиска
         tracksAdapter = TracksAdapter(tracks) { track ->
-            Log.d("listener", "tracksAdapter")
             searchHistoryInteractor.addTrack(track)
 
             val gson = Gson()
@@ -114,7 +113,6 @@ class SearchActivity : AppCompatActivity() {
         recyclerViewTracks.adapter = tracksAdapter
 
         tracksHistoryAdapter = TracksAdapter(tracksHistory) { track ->
-            Log.d("listener", "tracksHistoryAdapter")
             searchHistoryInteractor.addTrack(track)
 
             val gson = Gson()
@@ -126,11 +124,9 @@ class SearchActivity : AppCompatActivity() {
         }
         searchHistoryInteractor.getTracksHistory(object : SearchHistoryInteractor.SearchConsumer {
             override fun consume(history: List<Track>) {
-                Log.d("SearchActivity", "getTracksHistory callback: history size = ${history.size}")
                 tracksHistory.clear()
                 tracksHistory.addAll(history)
                 tracksHistoryAdapter.setTracks(tracksHistory)
-                Log.d("SearchActivity", "tracksHistory after addAll: ${tracksHistory.size}")
             }
         })
 
@@ -143,13 +139,11 @@ class SearchActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                Log.d("SearchActivity", "onTextChanged: s='$s', hasFocus=${searchEditText.hasFocus()}, tracksHistory.size=${tracksHistory.size}")
                 clearButton.visibility =
                     if (s.isEmpty()) View.GONE else View.VISIBLE
 
                 viewHistoryTracks.visibility =
                     if (searchEditText.hasFocus() && s.isEmpty() && tracksHistory.isNotEmpty()) View.VISIBLE else View.GONE
-                Log.d("SearchActivity", "viewHistoryTracks.visibility = ${viewHistoryTracks.visibility}")
 
                 searchInput = s.toString()
                 searchDebounce()
@@ -170,10 +164,8 @@ class SearchActivity : AppCompatActivity() {
         }
 
         searchEditText.setOnFocusChangeListener { _, hasFocus ->
-            Log.d("SearchActivity", "onFocusChange: hasFocus=$hasFocus, text='${searchEditText.text}', tracksHistory.size=${tracksHistory.size}")
             viewHistoryTracks.visibility =
                 if (hasFocus && searchEditText.text.isEmpty() && tracksHistory.isNotEmpty()) View.VISIBLE else View.GONE
-            Log.d("SearchActivity", "viewHistoryTracks.visibility = ${viewHistoryTracks.visibility}")
         }
 
         placeholderButton.setOnClickListener {
@@ -182,12 +174,10 @@ class SearchActivity : AppCompatActivity() {
 
         // очистка истории поиска
         clearHistoryButton.setOnClickListener {
-            Log.d("SearchActivity", "clearHistoryButton clicked")
             searchHistoryInteractor.clearHistory()
             tracksHistory.clear()
             tracksHistoryAdapter.setTracks(tracksHistory)
             viewHistoryTracks.visibility = View.GONE
-            Log.d("SearchActivity", "tracksHistory cleared, viewHistoryTracks.visibility = ${viewHistoryTracks.visibility}")
         }
     }
 
@@ -195,11 +185,9 @@ class SearchActivity : AppCompatActivity() {
         super.onResume()
         searchHistoryInteractor.getTracksHistory(object : SearchHistoryInteractor.SearchConsumer {
             override fun consume(history: List<Track>) {
-                Log.d("SearchActivity", "onResume getTracksHistory callback: history size = ${history.size}")
                 tracksHistory.clear()
                 tracksHistory.addAll(history)
                 tracksHistoryAdapter.setTracks(tracksHistory)
-                Log.d("SearchActivity", "tracksHistory after addAll: ${tracksHistory.size}")
             }
         })
     }
@@ -209,32 +197,11 @@ class SearchActivity : AppCompatActivity() {
         handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun searchTracks() {
         flProgressBar.visibility = View.VISIBLE
         placeholderViewNoInternet.visibility = View.GONE
         placeholderViewNothingFound.visibility = View.GONE
-
-        /*tracksInteractor.searchTracks(
-            searchEditText.text.toString(),
-            object : TracksInteractor.TracksConsumer {
-                @SuppressLint("NotifyDataSetChanged")
-                override fun consume(foundTracks: List<Track>) {
-                    handler.post {
-                        flProgressBar.visibility = View.GONE
-                        tracks.clear()
-                        if (foundTracks.isNotEmpty()) {
-                            tracks.addAll(foundTracks)
-                            tracksAdapter.notifyDataSetChanged()
-                            placeholderViewNothingFound.visibility = View.GONE
-                            showMessage("", "")
-                        } else {
-                            placeholderViewNothingFound.visibility = View.VISIBLE
-                            showMessage(getString(R.string.nothing_found), "")
-                        }
-                    }
-                }
-            }
-        )*/
         tracksInteractor.searchTracks(
             searchEditText.text.toString()
         ) { result ->
@@ -248,9 +215,11 @@ class SearchActivity : AppCompatActivity() {
                         placeholderViewNothingFound.visibility = View.GONE
                         showMessage("", "")
                     }
+
                     TrackSearchResult.NoInternet -> {
                         placeholderViewNoInternet.visibility = View.VISIBLE
                     }
+
                     TrackSearchResult.NotFound -> {
                         placeholderViewNothingFound.visibility = View.VISIBLE
                         showMessage(getString(R.string.nothing_found), "")
@@ -289,7 +258,6 @@ class SearchActivity : AppCompatActivity() {
 
     companion object {
         private const val KEY_SEARCH_INPUT = "search_input"
-
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
     }
 }

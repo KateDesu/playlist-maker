@@ -29,6 +29,7 @@ class TracksRepositoryImpl(private val networkClient: NetworkClient) : TracksRep
                     it.previewUrl
                 )
             })
+
             -1 -> TrackSearchResult.NoInternet
             else -> TrackSearchResult.NotFound
         }

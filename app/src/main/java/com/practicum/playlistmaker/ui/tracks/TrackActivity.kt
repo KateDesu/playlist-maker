@@ -29,10 +29,10 @@ class TrackActivity : AppCompatActivity() {
 
     private var playerState = STATE_DEFAULT
 
-    private var url: String?=null
+    private var url: String? = null
 
     private val handler = Handler(Looper.getMainLooper())
-    private  lateinit var tvTrackTime: TextView
+    private lateinit var tvTrackTime: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,7 +80,7 @@ class TrackActivity : AppCompatActivity() {
 
         tvTrackName.text = track.trackName
         tvArtistName.text = track.artistName
-        tvDurationValue.text=track.trackTime
+        tvDurationValue.text = track.trackTime
         tvCollectionNameValue.text = track.collectionName
         tvReleaseDateValue.text = track.releaseDate.substring(0, 4)
         tvPrimaryGenreNameValue.text = track.primaryGenreName
@@ -92,6 +92,7 @@ class TrackActivity : AppCompatActivity() {
             playbackControl()
         }
     }
+
     override fun onPause() {
         super.onPause()
         pausePlayer()
@@ -104,10 +105,11 @@ class TrackActivity : AppCompatActivity() {
     }
 
     private fun playbackControl() {
-        when(playerState) {
+        when (playerState) {
             STATE_PLAYING -> {
                 pausePlayer()
             }
+
             STATE_PREPARED, STATE_PAUSED -> {
                 startPlayer()
             }
@@ -126,7 +128,7 @@ class TrackActivity : AppCompatActivity() {
             playerState = STATE_PREPARED
 
             stopTimer()
-            tvTrackTime.text="00:00"
+            tvTrackTime.text = "00:00"
         }
     }
 

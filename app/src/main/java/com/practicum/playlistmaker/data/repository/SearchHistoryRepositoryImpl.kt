@@ -1,7 +1,6 @@
 package com.practicum.playlistmaker.data.repository
 
 import android.content.SharedPreferences
-import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.practicum.playlistmaker.domain.api.SearchHistoryRepository
@@ -20,7 +19,6 @@ class SearchHistoryRepositoryImpl(
             historyTracks.subList(MAX_HISTORY_SIZE, historyTracks.size).clear()
         }
         saveHistoryList(historyTracks)
-        Log.d("SearchHistoryRepo", "addTrack: saved history = ${gson.toJson(historyTracks)}")
     }
 
     override fun clearHistory() {
@@ -28,9 +26,7 @@ class SearchHistoryRepositoryImpl(
     }
 
     override fun getTracksHistory(): List<Track> {
-        //return getHistoryList()
         val history = getHistoryList()
-        Log.d("SearchHistoryRepo", "getTracksHistory: loaded history = ${gson.toJson(history)}")
         return history
     }
 
