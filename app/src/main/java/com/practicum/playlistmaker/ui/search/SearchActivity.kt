@@ -243,11 +243,11 @@ class SearchActivity : AppCompatActivity() {
         showMessage(message, "")
     }
 
-    fun showEmpty(message: String) {
+    fun showEmpty() {
         flProgressBar.visibility = View.GONE
         placeholderViewNoInternet.visibility = View.GONE
         placeholderViewNothingFound.visibility = View.VISIBLE
-        showMessage("", message)
+        recyclerViewTracks.visibility = View.GONE
     }
 
     fun showNoInternet() {
@@ -300,7 +300,7 @@ class SearchActivity : AppCompatActivity() {
             is SearchState.NoInternet -> {
                 showNoInternet()
             }
-            is SearchState.Empty -> showEmpty(state.message)
+            is SearchState.Empty -> showEmpty()
         }
     }
 }

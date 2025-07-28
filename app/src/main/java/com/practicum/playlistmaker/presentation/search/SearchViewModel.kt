@@ -53,7 +53,7 @@ class SearchViewModel(private val context: Context) : ViewModel() {
                 when (result) {
                     is TrackSearchResult.Success -> {
                         if (result.tracks.isEmpty()) {
-                            renderState(SearchState.Empty("Ничего не найдено"))
+                            renderState(SearchState.Empty)
                         } else {
                             renderState(SearchState.Content(result.tracks))
                         }
@@ -64,7 +64,7 @@ class SearchViewModel(private val context: Context) : ViewModel() {
                     }
 
                     TrackSearchResult.NotFound -> {
-                        renderState(SearchState.Empty("Ничего не найдено"))
+                        renderState(SearchState.Empty)
                     }
                 }
             }
