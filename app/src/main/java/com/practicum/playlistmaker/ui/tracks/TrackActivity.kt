@@ -4,9 +4,6 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -15,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.gson.Gson
 import com.practicum.playlistmaker.R
+import com.practicum.playlistmaker.databinding.ActivityTrackBinding
 import com.practicum.playlistmaker.domain.models.Track
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -22,7 +20,7 @@ import kotlin.math.roundToInt
 
 class TrackActivity : AppCompatActivity() {
 
-    private lateinit var ibPlay: ImageButton
+    private lateinit var binding: ActivityTrackBinding
     private var mediaPlayer = MediaPlayer()
 
     private val dateFormat by lazy { SimpleDateFormat("mm:ss", Locale.getDefault()) }
@@ -32,63 +30,51 @@ class TrackActivity : AppCompatActivity() {
     private var url: String? = null
 
     private val handler = Handler(Looper.getMainLooper())
-    private lateinit var tvTrackTime: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_track)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+
+        binding = ActivityTrackBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
         // Включаем кнопку "Назад" в Toolbar
-        val toolbar = findViewById<ImageButton>(R.id.ibToolbar)
-        toolbar.setOnClickListener {
+        binding.ibToolbar.setOnClickListener {
             finish()
         }
-
-        ibPlay = findViewById(R.id.ibPlayStop)
 
         val trackJson = intent.getStringExtra("trackJson")
         val gson = Gson()
         val track: Track = gson.fromJson(trackJson, Track::class.java)
         url = track.previewUrl
 
-        val ivCover = findViewById<ImageView>(R.id.ivCover)
-        val tvTrackName = findViewById<TextView>(R.id.tvTrackName)
-        val tvArtistName = findViewById<TextView>(R.id.tvArtistName)
-        val tvDurationValue = findViewById<TextView>(R.id.tvDurationValue)
-        val tvCollectionNameValue = findViewById<TextView>(R.id.tvСollectionNameValue)
-        val tvReleaseDateValue = findViewById<TextView>(R.id.tvReleaseDateValue)
-        val tvPrimaryGenreNameValue = findViewById<TextView>(R.id.tvPrimaryGenreNameValue)
-        val tvCountryValue = findViewById<TextView>(R.id.tvCountryValue)
-        tvTrackTime = findViewById(R.id.tvTrackTime)
-
         val enlargedImageUrl = track.artworkUrl100.replaceAfterLast('/', "512x512bb.jpg")
 
-        val radius = 8 * this.getResources().displayMetrics.density + 0.5f
+        val radius = 8 * this.resources.displayMetrics.density + 0.5f
 
         Glide.with(this)
             .load(enlargedImageUrl)
             .centerCrop()
             .transform(RoundedCorners(radius.roundToInt()))
             .placeholder(R.drawable.placeholder_track_big)
-            .into(ivCover)
+            .into(binding.ivCover)
 
-        tvTrackName.text = track.trackName
-        tvArtistName.text = track.artistName
-        tvDurationValue.text = track.trackTime
-        tvCollectionNameValue.text = track.collectionName
-        tvReleaseDateValue.text = track.releaseDate.substring(0, 4)
-        tvPrimaryGenreNameValue.text = track.primaryGenreName
-        tvCountryValue.text = track.country
+        binding.tvTrackName.text = track.trackName
+        binding.tvArtistName.text = track.artistName
+        binding.tvDurationValue.text = track.trackTime
+        binding.tvCollectionNameValue.text = track.collectionName
+        binding.tvReleaseDateValue.text = track.releaseDate.substring(0, 4)
+        binding.tvPrimaryGenreNameValue.text = track.primaryGenreName
+        binding.tvCountryValue.text = track.country
 
         preparePlayer()
 
-        ibPlay.setOnClickListener {
+        binding.ibPlayStop.setOnClickListener {
             playbackControl()
         }
     }
@@ -120,21 +106,21 @@ class TrackActivity : AppCompatActivity() {
         mediaPlayer.setDataSource(url)
         mediaPlayer.prepareAsync()
         mediaPlayer.setOnPreparedListener {
-            ibPlay.isEnabled = true
+            binding.ibPlayStop.isEnabled = true
             playerState = STATE_PREPARED
         }
         mediaPlayer.setOnCompletionListener {
-            ibPlay.setImageResource(R.drawable.ic_play_track_button)
+            binding.ibPlayStop.setImageResource(R.drawable.ic_play_track_button)
             playerState = STATE_PREPARED
 
             stopTimer()
-            tvTrackTime.text = "00:00"
+            binding.tvTrackTime.text = "00:00"
         }
     }
 
     private fun startPlayer() {
         mediaPlayer.start()
-        ibPlay.setImageResource(R.drawable.ic_stop_track_button)
+        binding.ibPlayStop.setImageResource(R.drawable.ic_stop_track_button)
         playerState = STATE_PLAYING
 
         startTimer()
@@ -142,7 +128,7 @@ class TrackActivity : AppCompatActivity() {
 
     private fun pausePlayer() {
         mediaPlayer.pause()
-        ibPlay.setImageResource(R.drawable.ic_play_track_button)
+        binding.ibPlayStop.setImageResource(R.drawable.ic_play_track_button)
         playerState = STATE_PAUSED
     }
 
@@ -152,7 +138,7 @@ class TrackActivity : AppCompatActivity() {
 
     private fun updateTrackTime() {
         if (mediaPlayer.isPlaying) {
-            tvTrackTime.text = dateFormat.format(mediaPlayer.currentPosition)
+            binding.tvTrackTime.text = dateFormat.format(mediaPlayer.currentPosition)
             handler.postDelayed({
                 updateTrackTime() // рекурсивно вызываем метод для обновления времени
             }, UPDATE_INTERVAL_MS) // задержка в 300 мс

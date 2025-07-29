@@ -132,7 +132,7 @@
         android:id="@+id/textsBarrier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="tvDuration, tvСollectionName, tvReleaseDate, tvPrimaryGenreName, tvCountry"
+        app:constraint_referenced_ids="tvDuration, tvCollectionName, tvReleaseDate, tvPrimaryGenreName, tvCountry"
         app:barrierDirection="end" />
 
     <TextView
@@ -160,7 +160,7 @@
         android:text="5:35"/>
 
     <TextView
-        android:id="@+id/tvСollectionName"
+        android:id="@+id/tvCollectionName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/text_view_about"
@@ -172,13 +172,13 @@
         android:text="@string/collection_name" />
 
     <TextView
-        android:id="@+id/tvСollectionNameValue"
+        android:id="@+id/tvCollectionNameValue"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="@color/text_view"
         android:textFontWeight="400"
         android:textSize="13sp"
-        app:layout_constraintBaseline_toBaselineOf="@id/tvСollectionName"
+        app:layout_constraintBaseline_toBaselineOf="@id/tvCollectionName"
         app:layout_constraintEnd_toEndOf="@+id/right_guideline"
         android:text="Yesterday (Remastered 2009)" />
 
@@ -191,7 +191,7 @@
         android:textSize="13sp"
         android:paddingVertical="8dp"
         app:layout_constraintStart_toStartOf="@+id/left_guideline"
-        app:layout_constraintTop_toBottomOf="@+id/tvСollectionName"
+        app:layout_constraintTop_toBottomOf="@+id/tvCollectionName"
         android:text="@string/release_date" />
 
     <TextView
