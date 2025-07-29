@@ -3,21 +3,19 @@ package com.practicum.playlistmaker.ui.settings
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.switchmaterial.SwitchMaterial
 import com.practicum.playlistmaker.Creator
 import com.practicum.playlistmaker.R
+import com.practicum.playlistmaker.databinding.ActivitySettingsBinding
 import com.practicum.playlistmaker.domain.api.ThemeSettingsInteractor
 
 class SettingsActivity : AppCompatActivity() {
-    private lateinit var themeSwitch: SwitchMaterial
+    private lateinit var binding: ActivitySettingsBinding
 
     private val themeSettingsInteractor: ThemeSettingsInteractor by lazy {
         Creator.provideThemeSettingsInteractor(this)
@@ -25,36 +23,33 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivitySettingsBinding.inflate(layoutInflater)
 
         enableEdgeToEdge()
-        setContentView(R.layout.activity_settings)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.settings)) { v, insets ->
+        setContentView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.settings) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
 
         // Включаем кнопку "Назад" в Toolbar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        toolbar.setNavigationOnClickListener { finish() }
+        binding.toolbar.setNavigationOnClickListener { finish() }
 
-        val shareTextView = findViewById<TextView>(R.id.tvShareApp)
         val urlPracticum = getString(R.string.url_practicum)
 
-        shareTextView.setOnClickListener {
+        binding.tvShareApp.setOnClickListener {
             val intent = Intent(Intent.ACTION_SEND)
             intent.type = "text/plain"
             intent.putExtra(Intent.EXTRA_TEXT, urlPracticum)
             startActivity(intent)
         }
 
-        val writeToSupportTextView = findViewById<TextView>(R.id.tvWriteToSupport)
-
-        writeToSupportTextView.setOnClickListener {
+        binding.tvWriteToSupport.setOnClickListener {
             val messageHeader = getString(R.string.message_header)
             val messageBody = getString(R.string.message_body)
 
@@ -66,18 +61,16 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val userAgreementTextView = findViewById<TextView>(R.id.tvUserAgreement)
         val urlAgreement = getString(R.string.url_agreement).toUri()
 
-        userAgreementTextView.setOnClickListener {
+        binding.tvUserAgreement.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, urlAgreement)
             startActivity(intent)
         }
 
         // работа с темой через интерактор
-        themeSwitch = findViewById(R.id.smThemeSwitcher)
-        themeSwitch.isChecked = themeSettingsInteractor.isDarkTheme()
-        themeSwitch.setOnCheckedChangeListener { _, checked ->
+        binding.smThemeSwitcher.isChecked = themeSettingsInteractor.isDarkTheme()
+        binding.smThemeSwitcher.setOnCheckedChangeListener { _, checked ->
             themeSettingsInteractor.setDarkTheme(checked)
             AppCompatDelegate.setDefaultNightMode(
                 if (checked) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
