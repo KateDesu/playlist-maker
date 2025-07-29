@@ -9,7 +9,7 @@ import com.practicum.playlistmaker.domain.models.Track
 import kotlin.math.roundToInt
 
 class TracksViewHolder(
-    val binding: ItemViewTrackBinding
+    private val binding: ItemViewTrackBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(model: Track) {
