@@ -15,7 +15,7 @@
         app:title="@string/title" />
 
     <Button
-        android:id="@+id/btn_search"
+        android:id="@+id/btnSearch"
         style="@style/ButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -28,7 +28,7 @@
         app:icon="@drawable/ic_search" />
 
     <Button
-        android:id="@+id/btn_library"
+        android:id="@+id/btnLibrary"
         style="@style/ButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -40,7 +40,7 @@
         app:icon="@drawable/ic_library" />
 
     <Button
-        android:id="@+id/btn_settings"
+        android:id="@+id/btnSettings"
         style="@style/ButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="0dp"
